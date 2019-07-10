@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="028a427f-cf23-4cf8-87a8-48bef9d424e5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/window/menuWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/window/menuWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/window/productionWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/window/productionWindow.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,8 +30,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/window/menuWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
+            <state relative-caret-position="286">
+              <caret line="51" column="36" selection-start-line="51" selection-start-column="36" selection-end-line="51" selection-end-column="36" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -79,8 +78,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/window/taslakWindow.py" />
-        <option value="$PROJECT_DIR$/window/menuWindow.py" />
         <option value="$PROJECT_DIR$/window/productionWindow.py" />
+        <option value="$PROJECT_DIR$/window/menuWindow.py" />
       </list>
     </option>
   </component>
@@ -268,8 +267,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/window/menuWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
+        <state relative-caret-position="286">
+          <caret line="51" column="36" selection-start-line="51" selection-start-column="36" selection-end-line="51" selection-end-column="36" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>

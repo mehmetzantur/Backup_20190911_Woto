@@ -50,7 +50,6 @@ class MenuWindow(QWidget):
 
         self.myDialog.setWindowTitle('EMİR NO GİRİNİZ - ÜRETİM BAŞLAT')
         self.myDialog.setModal(True)
-        self.myDialog.setFixedSize(400, piResolutionHeight)
         self.myDialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
         centerWidget(self.myDialog)
 
