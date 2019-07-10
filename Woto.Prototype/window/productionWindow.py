@@ -36,7 +36,6 @@ class ProductionWindow(QDialog):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.setWindowTitle('ÜRETİM')
-        Form.setFixedSize(piResolutionWidth, piResolutionHeight)
         Form.setWindowFlag(Qt.WindowCloseButtonHint, False)
         Form.setWindowFlag(Qt.WindowFullscreenButtonHint, False)
         Form.setWindowFlag(Qt.WindowMinimizeButtonHint, False)
