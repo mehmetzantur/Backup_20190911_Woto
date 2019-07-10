@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="028a427f-cf23-4cf8-87a8-48bef9d424e5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/window/menuWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/window/menuWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/window/productionWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/window/productionWindow.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,8 +19,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/window/productionWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-782">
-              <caret line="36" column="34" lean-forward="true" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
+            <state relative-caret-position="371">
+              <caret line="282" lean-forward="true" selection-start-line="282" selection-end-line="282" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -30,8 +31,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/window/menuWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="162" column="60" lean-forward="true" selection-start-line="162" selection-start-column="60" selection-end-line="162" selection-end-column="60" />
+            <state relative-caret-position="337">
+              <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -62,8 +63,10 @@
       <find>btnClick_btnClose</find>
       <find>numpadGrid</find>
       <find>close</find>
-      <find>KAPAT</find>
       <find>window</find>
+      <find>KAPAT</find>
+      <find>show</find>
+      <find>exec</find>
     </findStrings>
     <replaceStrings>
       <replace>btnClick_btnCloseDialog</replace>
@@ -76,8 +79,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/window/taslakWindow.py" />
-        <option value="$PROJECT_DIR$/window/productionWindow.py" />
         <option value="$PROJECT_DIR$/window/menuWindow.py" />
+        <option value="$PROJECT_DIR$/window/productionWindow.py" />
       </list>
     </option>
   </component>
@@ -255,8 +258,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/window/productionWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-782">
-          <caret line="36" column="34" lean-forward="true" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
+        <state relative-caret-position="371">
+          <caret line="282" lean-forward="true" selection-start-line="282" selection-end-line="282" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
@@ -265,8 +268,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/window/menuWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="162" column="60" lean-forward="true" selection-start-line="162" selection-start-column="60" selection-end-line="162" selection-end-column="60" />
+        <state relative-caret-position="337">
+          <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>

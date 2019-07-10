@@ -164,7 +164,8 @@ class MenuWindow(QWidget):
             self.myDialogVBox.addLayout(self.numpadGrid)
             self.myDialog.setLayout(self.myDialogVBox)
             self.showDialogForWorkOrderNumberHasLayout = True
-        self.myDialog.exec()
+        #self.myDialog.exec()
+        self.myDialog.showFullScreen()
 
     def btnClick_btnClose(self):
         self.txtWorkOrderNumber.setText('')
@@ -182,7 +183,7 @@ class MenuWindow(QWidget):
         self.productionWindow = QDialog()
         self.ui = ProductionWindow()
         self.ui.setupUi(self.productionWindow)
-        self.productionWindow.show()
+        self.productionWindow.showFullScreen()
 
 
 def main():

@@ -258,7 +258,8 @@ class ProductionWindow(QDialog):
             self.myDialogVBox.addLayout(self.getNumpadGrid())
             self.myDialog.setLayout(self.myDialogVBox)
             self.showDialogForAddOperatorHasLayout = True
-        self.myDialog.exec()
+        #self.myDialog.exec()
+        self.myDialog.showFullScreen()
 
 
     def btnClick_btnClose(self):
