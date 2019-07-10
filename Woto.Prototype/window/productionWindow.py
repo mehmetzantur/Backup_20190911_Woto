@@ -47,7 +47,6 @@ class ProductionWindow(QDialog):
         self.myDialog = QDialog()
         self.myDialog.setWindowTitle('OPERATÖR ve PROSES EKLE')
         self.myDialog.setModal(True)
-        self.myDialog.setFixedSize(400, piResolutionHeight)
         self.myDialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
         centerWidget(self.myDialog)
 

@@ -4,7 +4,9 @@
     <bookmark url="file://$PROJECT_DIR$/window/menuWindow.py" line="51" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="028a427f-cf23-4cf8-87a8-48bef9d424e5" name="Default Changelist" comment="" />
+    <list default="true" id="028a427f-cf23-4cf8-87a8-48bef9d424e5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/window/productionWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/window/productionWindow.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +18,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/window/productionWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="38" selection-start-line="38" selection-end-line="38" />
+            <state relative-caret-position="337">
+              <caret line="49" selection-start-line="49" selection-end-line="49" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -265,8 +267,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/window/productionWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
+        <state relative-caret-position="337">
+          <caret line="49" selection-start-line="49" selection-end-line="49" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
