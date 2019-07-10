@@ -54,7 +54,7 @@ class MenuWindow(QWidget):
         self.myDialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
         centerWidget(self.myDialog)
 
-        self.show()
+        self.showFullScreen()
 
 
 
