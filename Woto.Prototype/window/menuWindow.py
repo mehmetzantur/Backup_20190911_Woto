@@ -94,9 +94,10 @@ class MenuWindow(QWidget):
         btnMenu8.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         btnMenu8.setFont(fontSize20)
 
-        btnMenu9 = QPushButton('MENÜ9')
-        btnMenu9.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnMenu9.setFont(fontSize20)
+        btnClose = QPushButton('KAPAT')
+        btnClose.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        btnClose.clicked.connect(QCoreApplication.instance().quit)
+        btnClose.setFont(fontSize20)
 
         menuGrid = QGridLayout()
         menuGrid.addWidget(btnStartProduction, 0, 0)
@@ -107,7 +108,7 @@ class MenuWindow(QWidget):
         menuGrid.addWidget(btnMenu6, 1, 2)
         menuGrid.addWidget(btnMenu7, 2, 0)
         menuGrid.addWidget(btnMenu8, 2, 1)
-        menuGrid.addWidget(btnMenu9, 2, 2)
+        menuGrid.addWidget(btnClose, 2, 2)
 
         return menuGrid
 
@@ -192,7 +193,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 
 
 
