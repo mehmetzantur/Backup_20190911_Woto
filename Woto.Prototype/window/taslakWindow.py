@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -12,6 +13,9 @@ fontSize20 = QFont()
 fontSize20.setPointSize(20)
 
 
+
+
+
 # Gönderilen nesneyi ekranda ortalar.
 def centerWidget(widget):
     frameGm = widget.frameGeometry()
@@ -20,29 +24,27 @@ def centerWidget(widget):
     frameGm.moveCenter(centerPoint)
     widget.move(frameGm.topLeft())
 
-
-class ProductionWindow(QWidget):
-    def setupUi(self, Form):
-        Form.setObjectName("Form")
-        Form.resize(piResolutionWidth, piResolutionHeight)
-        centerWidget(Form)
-        self.pushButton = QPushButton(Form)
-        self.pushButton.setGeometry(QRect(130, 100, 75, 23))
-        self.pushButton.setObjectName("pushButton")
-
-        Form.setWindowTitle('Foorrrmmm')
-        self.pushButton.setText('btn')
+class MainWindow(QMainWindow):
 
 
+    def __init__(self):
+        super(MainWindow, self).__init__()
+
+        deneme = QPushButton('Deneme')
+
+
+        self.showFullScreen()
 
 
 
 def main():
     app = QApplication(sys.argv)
-    mainWindow = ProductionWindow()
+    mainWindow = MainWindow()
     sys.exit(app.exec_())
+
 
 if __name__ == '__main__':
     main()
+
 
 
