@@ -1,8 +1,18 @@
 # -*- coding: utf-8 -*-
+import os, sys, inspect
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-import sys
+
+from model.operator import Operator
+from model.process import Process
+from model.workOperatorProcessInfo import WorkOperatorProcessInfo
+
+
 
 # Sabitler
 
@@ -345,12 +355,15 @@ class Production(QWidget):
         self.focusedCQLineEdit.setText(self.focusedCQLineEdit.text()[:-1])
 
     def btnClick_btnAddOperator(self, valOperatorCode, valProcessCode):
-        print('Operatör: ', str(valOperatorCode), ' - Proses: ', str(valProcessCode))
+        operator = Operator(valOperatorCode)
+        process = Process(valProcessCode, '')
+        workOperatorProcessInfo = WorkOperatorProcessInfo(operator, process)
+        print('Operatör: ', str(workOperatorProcessInfo.operator.code), ' - Proses: ', str(workOperatorProcessInfo.process.code))
         self.btnClick_btnReject(self.step2Dialog)
         self._showDialogStep2()
 
     def focusedLE(self):
-        print(self.sender())
+        #print(self.sender())
         self.focusedCQLineEdit = self.sender()
 
     #endregion
