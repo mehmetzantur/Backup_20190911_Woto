@@ -15,7 +15,7 @@ from model.viewModel.vmOperatorProcess import vmOperatorProcess
 #endregion
 
 #region CONTROLLERS
-from controller.jobController import JobController
+from controller.utilController import UtilController as util
 from controller.workerController import WorkerController
 #endregion
 
@@ -86,7 +86,7 @@ class Production(QWidget):
         lblJobOrderNumber.setFont(fontSize20)
         gridHeader.addWidget(lblJobOrderNumber, 0, 0)
 
-        self.valJobOrderNumber = QLabel('19-123')
+        self.valJobOrderNumber = QLabel()
         self.valJobOrderNumber.setAlignment(Qt.AlignLeft)
         self.valJobOrderNumber.setFixedHeight(heightHeader)
         self.valJobOrderNumber.setFont(fontSize20)
@@ -99,7 +99,7 @@ class Production(QWidget):
         lblCounter.setFont(fontSize20)
         gridHeader.addWidget(lblCounter, 0, 1)
 
-        self.valCounter = QLabel('85 / 2')
+        self.valCounter = QLabel('0 / 0')
         self.valCounter.setAlignment(Qt.AlignVCenter)
         self.valCounter.setAlignment(Qt.AlignHCenter)
         self.valCounter.setFixedHeight(heightHeader)
@@ -112,7 +112,7 @@ class Production(QWidget):
         lblRegion.setFont(fontSize20)
         gridHeader.addWidget(lblRegion, 0, 2)
 
-        self.valRegion = QLabel('A-03')
+        self.valRegion = QLabel(util().region)
         self.valRegion.setAlignment(Qt.AlignRight)
         self.valRegion.setFixedHeight(heightHeader)
         self.valRegion.setFont(fontSize20)
@@ -131,11 +131,9 @@ class Production(QWidget):
 
         gridContent = QGridLayout()
 
-        self.btnGrid = QPushButton('GRİD GELECEK')
-        self.btnGrid.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        # self.btnGrid.setFixedHeight(310)
-        self.btnGrid.setFont(fontSize20)
-        gridContent.addWidget(self.btnGrid, 1, 0, 1, 3)
+        self.tableWorker = QTableWidget()
+
+        gridContent.addWidget(self.tableWorker, 1, 0, 1, 3)
 
         boxRoot.addLayout(gridContent)
 
@@ -188,7 +186,7 @@ class Production(QWidget):
         self.step1Dialog.setLayout(self._buildStep1())
         self.step1Dialog.setWindowTitle('Emir No giriniz...')
         # self.step1Dialog.setWindowFlag(Qt.FramelessWindowHint)
-        # self.step1Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
+        self.step1Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
         self.step1Dialog.setWindowOpacity(0.9)
         self.step1Dialog.resize(600, 380)
         self.step1Dialog.exec()
@@ -201,8 +199,8 @@ class Production(QWidget):
         self.step2Dialog = QDialog()
         self.step2Dialog.setLayout(self._buildStep2())
         self.step2Dialog.setWindowTitle('Operatör ve Proses giriniz...')
-        # self.step1Dialog.setWindowFlag(Qt.FramelessWindowHint)
-        # self.step1Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
+        # self.step2Dialog.setWindowFlag(Qt.FramelessWindowHint)
+        self.step2Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
         self.step2Dialog.setWindowOpacity(0.9)
         self.step2Dialog.resize(600, 380)
         self.step2Dialog.exec()
@@ -381,11 +379,27 @@ class Production(QWidget):
 
         if len(self.operatorProcessList) != self.lastOperatorCount:
             if len(self.operatorList) > 0:
-                self.workerId = WorkerController().createWorker(self.valJobOrderNumber.text(), self.operatorList, self.operatorProcessList)
+                self.jobId = WorkerController().createWorker(self.valJobOrderNumber.text(), self.operatorList, self.operatorProcessList)
 
             self.lastOperatorCount = len(self.operatorProcessList)
 
         self.btnClick_btnReject(self.step2Dialog)
+
+        self.tableWorker.clear()
+        self.tableWorker.setRowCount(0)
+        self.tableWorker.setColumnCount(4)
+
+        for row_number, row_data in enumerate(WorkerController().getWorkersForJobOrderNumber(self.jobId)):
+            self.tableWorker.insertRow(row_number)
+            for column_number, data in enumerate(row_data):
+                self.tableWorker.setItem(row_number, column_number, QTableWidgetItem(str(data)))
+
+        self.tableWorker.setHorizontalHeaderItem(0, QTableWidgetItem('Job Id'))
+        self.tableWorker.setHorizontalHeaderItem(1, QTableWidgetItem('OperatorId'))
+        self.tableWorker.setHorizontalHeaderItem(2, QTableWidgetItem('ProcessId'))
+        self.tableWorker.setHorizontalHeaderItem(3, QTableWidgetItem('CreatedId'))
+
+
 
     def focusedLE(self):
         #print(self.sender())
