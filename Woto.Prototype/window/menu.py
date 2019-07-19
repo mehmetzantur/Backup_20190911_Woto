@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
+import os, sys, inspect
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-import sys
 
-from production import Production
+from controller.dbController import DbController
+from window.production import Production
 
 
 
@@ -34,6 +39,8 @@ class Menu(QWidget):
 
     def __init__(self):
         super(Menu, self).__init__()
+
+        DbController().initDb()
 
         self.setLayout(self._buildUI())
         # self.show()

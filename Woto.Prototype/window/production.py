@@ -8,11 +8,16 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from model.operator import Operator
-from model.process import Process
-from model.workOperatorProcessInfo import WorkOperatorProcessInfo
+#region MODELS
+from model.job import Job
+from model.workerProcess import WorkerProcess
+from model.viewModel.vmOperatorProcess import vmOperatorProcess
+#endregion
 
-
+#region CONTROLLERS
+from controller.utilController import UtilController as util
+from controller.workerController import WorkerController
+#endregion
 
 # Sabitler
 
@@ -50,10 +55,19 @@ def centerWidget(widget):
 
 class Production(QWidget):
 
+
+
+
     def _buildUI(self, Window):
 
+        # region VARIABLES
+        self.operatorProcessList = []
+        self.operatorList = []
+        self.lastOperatorCount = 0
+        # endregion
+
         self.setLayout(self._buildMain())
-        #self.show()
+        # self.show()
         self.showFullScreen()
 
         self._showDialogStep1()
@@ -68,17 +82,17 @@ class Production(QWidget):
         gridHeader = QGridLayout()
         gridHeader.setAlignment(Qt.AlignTop)
 
-        lblWorkOrderNumber = QLabel('Emir:')
-        lblWorkOrderNumber.setAlignment(Qt.AlignLeft)
-        lblWorkOrderNumber.setFixedHeight(heightHeader)
-        lblWorkOrderNumber.setFont(fontSize20)
-        gridHeader.addWidget(lblWorkOrderNumber, 0, 0)
+        lblJobOrderNumber = QLabel('Emir:')
+        lblJobOrderNumber.setAlignment(Qt.AlignLeft)
+        lblJobOrderNumber.setFixedHeight(heightHeader)
+        lblJobOrderNumber.setFont(fontSize20)
+        gridHeader.addWidget(lblJobOrderNumber, 0, 0)
 
-        self.valWorkOrderNumber = QLabel('19-123')
-        self.valWorkOrderNumber.setAlignment(Qt.AlignLeft)
-        self.valWorkOrderNumber.setFixedHeight(heightHeader)
-        self.valWorkOrderNumber.setFont(fontSize20)
-        gridHeader.addWidget(self.valWorkOrderNumber, 1, 0)
+        self.valJobOrderNumber = QLabel()
+        self.valJobOrderNumber.setAlignment(Qt.AlignLeft)
+        self.valJobOrderNumber.setFixedHeight(heightHeader)
+        self.valJobOrderNumber.setFont(fontSize20)
+        gridHeader.addWidget(self.valJobOrderNumber, 1, 0)
 
         lblCounter = QLabel('Sağlam / Fire:')
         lblCounter.setAlignment(Qt.AlignVCenter)
@@ -87,7 +101,7 @@ class Production(QWidget):
         lblCounter.setFont(fontSize20)
         gridHeader.addWidget(lblCounter, 0, 1)
 
-        self.valCounter = QLabel('85 / 2')
+        self.valCounter = QLabel('0 / 0')
         self.valCounter.setAlignment(Qt.AlignVCenter)
         self.valCounter.setAlignment(Qt.AlignHCenter)
         self.valCounter.setFixedHeight(heightHeader)
@@ -100,7 +114,7 @@ class Production(QWidget):
         lblRegion.setFont(fontSize20)
         gridHeader.addWidget(lblRegion, 0, 2)
 
-        self.valRegion = QLabel('A-03')
+        self.valRegion = QLabel(util().region)
         self.valRegion.setAlignment(Qt.AlignRight)
         self.valRegion.setFixedHeight(heightHeader)
         self.valRegion.setFont(fontSize20)
@@ -119,11 +133,12 @@ class Production(QWidget):
 
         gridContent = QGridLayout()
 
-        self.btnGrid = QPushButton('GRİD GELECEK')
-        self.btnGrid.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        # self.btnGrid.setFixedHeight(310)
-        self.btnGrid.setFont(fontSize20)
-        gridContent.addWidget(self.btnGrid, 1, 0, 1, 3)
+        self.tableWorker = QTableWidget()
+        self.tableWorker.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.tableWorker.setCornerButtonEnabled(True)
+        self.tableWorker.setSortingEnabled(True)
+
+        gridContent.addWidget(self.tableWorker, 1, 0, 1, 3)
 
         boxRoot.addLayout(gridContent)
 
@@ -147,15 +162,26 @@ class Production(QWidget):
         gridFooter.addWidget(btnClose, 1, 0)
 
         btnStartStop = QPushButton('Başla')
+        # btnStartStop.clicked.connect(self.deleteOperatorProcess)
         btnStartStop.setFixedHeight(heightFooter)
         btnStartStop.setFont(fontSize20)
         gridFooter.addWidget(btnStartStop, 1, 1)
 
-        btnAddOperator = QPushButton('+ Operator')
-        #btnAddOperator.clicked.connect(self.btnClick_showDialogForAddOperator)
+        gridAddDeleteOperator = QGridLayout()
+
+        btnAddOperator = QPushButton('(+) Opt/Prs')
+        btnAddOperator.clicked.connect(self._showDialogStep2)
         btnAddOperator.setFixedHeight(heightFooter)
         btnAddOperator.setFont(fontSize20)
-        gridFooter.addWidget(btnAddOperator, 1, 2)
+        gridAddDeleteOperator.addWidget(btnAddOperator, 0, 0)
+
+        btnDeleteOperator = QPushButton('(-) Opt/Prs')
+        btnDeleteOperator.clicked.connect(self.deleteOperatorProcess)
+        btnDeleteOperator.setFixedHeight(heightFooter)
+        btnDeleteOperator.setFont(fontSize20)
+        gridAddDeleteOperator.addWidget(btnDeleteOperator, 0, 1)
+
+        gridFooter.addLayout(gridAddDeleteOperator, 1, 2)
 
         boxRoot.addLayout(gridFooter)
 
@@ -176,7 +202,7 @@ class Production(QWidget):
         self.step1Dialog.setLayout(self._buildStep1())
         self.step1Dialog.setWindowTitle('Emir No giriniz...')
         # self.step1Dialog.setWindowFlag(Qt.FramelessWindowHint)
-        # self.step1Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
+        self.step1Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
         self.step1Dialog.setWindowOpacity(0.9)
         self.step1Dialog.resize(600, 380)
         self.step1Dialog.exec()
@@ -189,8 +215,8 @@ class Production(QWidget):
         self.step2Dialog = QDialog()
         self.step2Dialog.setLayout(self._buildStep2())
         self.step2Dialog.setWindowTitle('Operatör ve Proses giriniz...')
-        # self.step1Dialog.setWindowFlag(Qt.FramelessWindowHint)
-        # self.step1Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
+        # self.step2Dialog.setWindowFlag(Qt.FramelessWindowHint)
+        self.step2Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
         self.step2Dialog.setWindowOpacity(0.9)
         self.step2Dialog.resize(600, 380)
         self.step2Dialog.exec()
@@ -207,12 +233,12 @@ class Production(QWidget):
 
         boxRoot = QVBoxLayout()
 
-        self.txtWorkOrderNumber = CQLineEdit()
-        self.txtWorkOrderNumber.setFont(fontSize20)
-        self.txtWorkOrderNumber.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
-        self.txtWorkOrderNumber.setPlaceholderText('Ör: 19-123')
-        self.txtWorkOrderNumber.clicked.connect(self.focusedLE)
-        boxRoot.addWidget(self.txtWorkOrderNumber)
+        txtJobOrderNumber = CQLineEdit()
+        txtJobOrderNumber.setFont(fontSize20)
+        txtJobOrderNumber.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+        txtJobOrderNumber.setPlaceholderText('Ör: 19-123')
+        txtJobOrderNumber.clicked.connect(self.focusedLE)
+        boxRoot.addWidget(txtJobOrderNumber)
 
         gridNumpad = self._buildNumPad()
 
@@ -243,7 +269,7 @@ class Production(QWidget):
         btnNextStep2 = QPushButton('DEVAM')
         btnNextStep2.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         btnNextStep2.setFont(fontSize20)
-        btnNextStep2.clicked.connect(self.btnClick_btnNextStep2)
+        btnNextStep2.clicked.connect(lambda: self.btnClick_btnNextStep2(txtJobOrderNumber.text()))
         gridNumpad.addWidget(btnNextStep2, 3, 2, 1, 2)
 
         boxRoot.addLayout(gridNumpad)
@@ -292,7 +318,7 @@ class Production(QWidget):
         btnReject = QPushButton('KAPAT')
         btnReject.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         btnReject.setFont(fontSize20)
-        btnReject.clicked.connect(lambda: self.btnClick_btnReject(self.step2Dialog))
+        btnReject.clicked.connect(self.btnClick_btnSubmitOperators)
         gridNumpad.addWidget(btnReject, 3, 0)
 
         btnNum0 = QPushButton('0')
@@ -337,11 +363,73 @@ class Production(QWidget):
 
     #region EVENTS
 
-    def btnClick_btnNextStep2(self):
+    def deleteOperatorProcess(self):
+
+
+
+        rowtext = []
+        indexes = self.tableWorker.selectionModel().selectedRows()
+        for index in sorted(indexes):
+            row = index.row()
+
+            for column in range(self.tableWorker.columnCount()):
+                rowtext.append(self.tableWorker.item(row, column).text())
+            print('secilen satir: ' + str(rowtext))
+
+        if len(rowtext) > 0:
+
+            print('--------------------deleteOperatorProcess baslangici--------------------')
+
+            print('son durum operatorProcessList: ' + str(len(self.operatorProcessList)))
+
+            for item in self.operatorProcessList:
+                if item.operatorCode == rowtext[2] and item.processCode == rowtext[3]:
+                    self.operatorProcessList.remove(item)
+                    print('silinen: ' + item.operatorCode + ' , ' + item.processCode)
+
+            print('güncel operatorProcessList: ' + str(len(self.operatorProcessList)))
+
+            operatorTempList = []
+            for item in self.operatorProcessList:
+                if item.operatorCode not in operatorTempList:
+                    operatorTempList.append(item.operatorCode)
+
+            print('operatorList: ' + str(self.operatorList))
+            print('aktarildi, operatorTempList: ' + str(operatorTempList))
+
+            print(str(self.operatorList) + ' == ' + str(operatorTempList))
+
+
+
+            if operatorTempList.count(rowtext[2]) == 0:
+                self.operatorList.remove(rowtext[2])
+                print('operatorList icindeki operator silindi')
+                #operatorTempList = self.operatorList
+                #print('operatorTempList içindeki operatör kodu silindi')
+                self.lastOperatorCount = self.lastOperatorCount - 1
+
+            print('güncel operatorList: ' + str(len(self.operatorList)))
+            print('güncel operatorProcessList: ' + str(len(self.operatorProcessList)))
+
+            selectedRow = self.tableWorker.currentRow()
+            self.tableWorker.removeRow(selectedRow)
+
+            self.btnClick_btnSubmitOperators()
+
+            print('--------------------deleteOperatorProcess bitisi--------------------')
+
+    def btnClick_btnNextStep2(self, jobOrderNumber):
+        self.valJobOrderNumber.setText(jobOrderNumber)
         self.btnClick_btnReject(self.step1Dialog)
         self._showDialogStep2()
 
     def btnClick_btnClose(self):
+        self.operatorProcessList = []
+        self.operatorList = []
+        self.lastOperatorCount = 0
+        self.tableWorker.clear()
+        print(str(len(self.operatorProcessList)))
+        print(str(len(self.operatorList)))
         self.close()
 
     def btnClick_btnReject(self, dialog):
@@ -354,13 +442,60 @@ class Production(QWidget):
     def btnClick_btnDel(self):
         self.focusedCQLineEdit.setText(self.focusedCQLineEdit.text()[:-1])
 
-    def btnClick_btnAddOperator(self, valOperatorCode, valProcessCode):
-        operator = Operator(valOperatorCode)
-        process = Process(valProcessCode, '')
-        workOperatorProcessInfo = WorkOperatorProcessInfo(operator, process)
-        print('Operatör: ', str(workOperatorProcessInfo.operator.code), ' - Proses: ', str(workOperatorProcessInfo.process.code))
+    def btnClick_btnAddOperator(self, operatorCode, processCode):
+
+        objOperatorProcess = vmOperatorProcess(operatorCode, processCode)
+        self.operatorProcessList.append(objOperatorProcess)
+        if operatorCode not in self.operatorList:
+            self.operatorList.append(operatorCode)
+
         self.btnClick_btnReject(self.step2Dialog)
         self._showDialogStep2()
+
+    def btnClick_btnSubmitOperators(self):
+
+        print('-----submit----')
+        print(str(len(self.operatorProcessList)))
+        print(str(len(self.operatorList)))
+        print(str(self.lastOperatorCount))
+
+        if len(self.operatorProcessList) != self.lastOperatorCount:
+            if len(self.operatorList) > 0:
+
+                for item in self.operatorProcessList:
+                    print(item.operatorCode + ' - ' + item.processCode)
+
+                self.jobId = WorkerController().createWorker(self.valJobOrderNumber.text(), self.operatorList, self.operatorProcessList)
+
+                self.lastOperatorCount = len(self.operatorProcessList)
+
+                self.tableWorker.clear()
+                self.tableWorker.setRowCount(0)
+                self.tableWorker.setColumnCount(5)
+
+                for row_number, row_data in enumerate(WorkerController().getWorkersForJobOrderNumber(self.jobId)):
+                    self.tableWorker.insertRow(row_number)
+                    for column_number, data in enumerate(row_data):
+                        self.tableWorker.setItem(row_number, column_number, QTableWidgetItem(str(data)))
+
+                self.tableWorker.setHorizontalHeaderItem(0, QTableWidgetItem('WP Id'))
+                self.tableWorker.setHorizontalHeaderItem(1, QTableWidgetItem('Job Id'))
+                self.tableWorker.setHorizontalHeaderItem(2, QTableWidgetItem('OperatorId'))
+                self.tableWorker.setHorizontalHeaderItem(3, QTableWidgetItem('ProcessId'))
+                self.tableWorker.setHorizontalHeaderItem(4, QTableWidgetItem('CreatedId'))
+
+            else:
+                self.tableWorker.clear()
+                self.tableWorker.setRowCount(0)
+                self.tableWorker.setColumnCount(5)
+
+                self.tableWorker.setHorizontalHeaderItem(0, QTableWidgetItem('WP Id'))
+                self.tableWorker.setHorizontalHeaderItem(1, QTableWidgetItem('Job Id'))
+                self.tableWorker.setHorizontalHeaderItem(2, QTableWidgetItem('OperatorId'))
+                self.tableWorker.setHorizontalHeaderItem(3, QTableWidgetItem('ProcessId'))
+                self.tableWorker.setHorizontalHeaderItem(4, QTableWidgetItem('CreatedId'))
+
+        self.btnClick_btnReject(self.step2Dialog)
 
     def focusedLE(self):
         #print(self.sender())
