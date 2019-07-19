@@ -55,17 +55,19 @@ def centerWidget(widget):
 
 class Production(QWidget):
 
-    #region VARIABLES
-    operatorProcessList = []
-    operatorList = []
-    lastOperatorCount = 0
-    #endregion
+
 
 
     def _buildUI(self, Window):
 
+        # region VARIABLES
+        self.operatorProcessList = []
+        self.operatorList = []
+        self.lastOperatorCount = 0
+        # endregion
+
         self.setLayout(self._buildMain())
-        #self.show()
+        # self.show()
         self.showFullScreen()
 
         self._showDialogStep1()
@@ -132,6 +134,9 @@ class Production(QWidget):
         gridContent = QGridLayout()
 
         self.tableWorker = QTableWidget()
+        self.tableWorker.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.tableWorker.setCornerButtonEnabled(True)
+        self.tableWorker.setSortingEnabled(True)
 
         gridContent.addWidget(self.tableWorker, 1, 0, 1, 3)
 
@@ -157,15 +162,26 @@ class Production(QWidget):
         gridFooter.addWidget(btnClose, 1, 0)
 
         btnStartStop = QPushButton('Başla')
+        # btnStartStop.clicked.connect(self.deleteOperatorProcess)
         btnStartStop.setFixedHeight(heightFooter)
         btnStartStop.setFont(fontSize20)
         gridFooter.addWidget(btnStartStop, 1, 1)
 
-        btnAddOperator = QPushButton('+ Operator')
+        gridAddDeleteOperator = QGridLayout()
+
+        btnAddOperator = QPushButton('(+) Opt/Prs')
         btnAddOperator.clicked.connect(self._showDialogStep2)
         btnAddOperator.setFixedHeight(heightFooter)
         btnAddOperator.setFont(fontSize20)
-        gridFooter.addWidget(btnAddOperator, 1, 2)
+        gridAddDeleteOperator.addWidget(btnAddOperator, 0, 0)
+
+        btnDeleteOperator = QPushButton('(-) Opt/Prs')
+        btnDeleteOperator.clicked.connect(self.deleteOperatorProcess)
+        btnDeleteOperator.setFixedHeight(heightFooter)
+        btnDeleteOperator.setFont(fontSize20)
+        gridAddDeleteOperator.addWidget(btnDeleteOperator, 0, 1)
+
+        gridFooter.addLayout(gridAddDeleteOperator, 1, 2)
 
         boxRoot.addLayout(gridFooter)
 
@@ -347,12 +363,73 @@ class Production(QWidget):
 
     #region EVENTS
 
+    def deleteOperatorProcess(self):
+
+
+
+        rowtext = []
+        indexes = self.tableWorker.selectionModel().selectedRows()
+        for index in sorted(indexes):
+            row = index.row()
+
+            for column in range(self.tableWorker.columnCount()):
+                rowtext.append(self.tableWorker.item(row, column).text())
+            print('secilen satir: ' + str(rowtext))
+
+        if len(rowtext) > 0:
+
+            print('--------------------deleteOperatorProcess baslangici--------------------')
+
+            print('son durum operatorProcessList: ' + str(len(self.operatorProcessList)))
+
+            for item in self.operatorProcessList:
+                if item.operatorCode == rowtext[2] and item.processCode == rowtext[3]:
+                    self.operatorProcessList.remove(item)
+                    print('silinen: ' + item.operatorCode + ' , ' + item.processCode)
+
+            print('güncel operatorProcessList: ' + str(len(self.operatorProcessList)))
+
+            operatorTempList = []
+            for item in self.operatorProcessList:
+                if item.operatorCode not in operatorTempList:
+                    operatorTempList.append(item.operatorCode)
+
+            print('operatorList: ' + str(self.operatorList))
+            print('aktarildi, operatorTempList: ' + str(operatorTempList))
+
+            print(str(self.operatorList) + ' == ' + str(operatorTempList))
+
+
+
+            if operatorTempList.count(rowtext[2]) == 0:
+                self.operatorList.remove(rowtext[2])
+                print('operatorList icindeki operator silindi')
+                #operatorTempList = self.operatorList
+                #print('operatorTempList içindeki operatör kodu silindi')
+                self.lastOperatorCount = self.lastOperatorCount - 1
+
+            print('güncel operatorList: ' + str(len(self.operatorList)))
+            print('güncel operatorProcessList: ' + str(len(self.operatorProcessList)))
+
+            selectedRow = self.tableWorker.currentRow()
+            self.tableWorker.removeRow(selectedRow)
+
+            self.btnClick_btnSubmitOperators()
+
+            print('--------------------deleteOperatorProcess bitisi--------------------')
+
     def btnClick_btnNextStep2(self, jobOrderNumber):
         self.valJobOrderNumber.setText(jobOrderNumber)
         self.btnClick_btnReject(self.step1Dialog)
         self._showDialogStep2()
 
     def btnClick_btnClose(self):
+        self.operatorProcessList = []
+        self.operatorList = []
+        self.lastOperatorCount = 0
+        self.tableWorker.clear()
+        print(str(len(self.operatorProcessList)))
+        print(str(len(self.operatorList)))
         self.close()
 
     def btnClick_btnReject(self, dialog):
@@ -377,29 +454,48 @@ class Production(QWidget):
 
     def btnClick_btnSubmitOperators(self):
 
+        print('-----submit----')
+        print(str(len(self.operatorProcessList)))
+        print(str(len(self.operatorList)))
+        print(str(self.lastOperatorCount))
+
         if len(self.operatorProcessList) != self.lastOperatorCount:
             if len(self.operatorList) > 0:
+
+                for item in self.operatorProcessList:
+                    print(item.operatorCode + ' - ' + item.processCode)
+
                 self.jobId = WorkerController().createWorker(self.valJobOrderNumber.text(), self.operatorList, self.operatorProcessList)
 
-            self.lastOperatorCount = len(self.operatorProcessList)
+                self.lastOperatorCount = len(self.operatorProcessList)
+
+                self.tableWorker.clear()
+                self.tableWorker.setRowCount(0)
+                self.tableWorker.setColumnCount(5)
+
+                for row_number, row_data in enumerate(WorkerController().getWorkersForJobOrderNumber(self.jobId)):
+                    self.tableWorker.insertRow(row_number)
+                    for column_number, data in enumerate(row_data):
+                        self.tableWorker.setItem(row_number, column_number, QTableWidgetItem(str(data)))
+
+                self.tableWorker.setHorizontalHeaderItem(0, QTableWidgetItem('WP Id'))
+                self.tableWorker.setHorizontalHeaderItem(1, QTableWidgetItem('Job Id'))
+                self.tableWorker.setHorizontalHeaderItem(2, QTableWidgetItem('OperatorId'))
+                self.tableWorker.setHorizontalHeaderItem(3, QTableWidgetItem('ProcessId'))
+                self.tableWorker.setHorizontalHeaderItem(4, QTableWidgetItem('CreatedId'))
+
+            else:
+                self.tableWorker.clear()
+                self.tableWorker.setRowCount(0)
+                self.tableWorker.setColumnCount(5)
+
+                self.tableWorker.setHorizontalHeaderItem(0, QTableWidgetItem('WP Id'))
+                self.tableWorker.setHorizontalHeaderItem(1, QTableWidgetItem('Job Id'))
+                self.tableWorker.setHorizontalHeaderItem(2, QTableWidgetItem('OperatorId'))
+                self.tableWorker.setHorizontalHeaderItem(3, QTableWidgetItem('ProcessId'))
+                self.tableWorker.setHorizontalHeaderItem(4, QTableWidgetItem('CreatedId'))
 
         self.btnClick_btnReject(self.step2Dialog)
-
-        self.tableWorker.clear()
-        self.tableWorker.setRowCount(0)
-        self.tableWorker.setColumnCount(4)
-
-        for row_number, row_data in enumerate(WorkerController().getWorkersForJobOrderNumber(self.jobId)):
-            self.tableWorker.insertRow(row_number)
-            for column_number, data in enumerate(row_data):
-                self.tableWorker.setItem(row_number, column_number, QTableWidgetItem(str(data)))
-
-        self.tableWorker.setHorizontalHeaderItem(0, QTableWidgetItem('Job Id'))
-        self.tableWorker.setHorizontalHeaderItem(1, QTableWidgetItem('OperatorId'))
-        self.tableWorker.setHorizontalHeaderItem(2, QTableWidgetItem('ProcessId'))
-        self.tableWorker.setHorizontalHeaderItem(3, QTableWidgetItem('CreatedId'))
-
-
 
     def focusedLE(self):
         #print(self.sender())

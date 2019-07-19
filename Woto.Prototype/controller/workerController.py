@@ -17,26 +17,31 @@ class WorkerController:
 
 
     def createWorker(self, jobOrderNumber, operatorList, operatorProcessList):
-        conn = DbController().getConnection()
-        cmd = conn.cursor()
-        jobId = JobController().createJob(jobOrderNumber)
-        for operatorId in operatorList:
-            query_Worker = "INSERT INTO Worker (JobId, OperatorId, CreatedTime, Guid) VALUES (?, ?, ?, ?)"
-            cmd.execute(query_Worker, (jobId, operatorId, util().getNow(), util().getUIID(),))
-            workerId = cmd.lastrowid
-            for obj in operatorProcessList:
-                if operatorId == obj.operatorCode:
-                    query_WorkerProcess = "INSERT INTO WorkerProcess (WorkerId, OperatorId, ProcessId, CreatedTime, Guid) VALUES (?, ?, ?, ?, ?)"
-                    cmd.execute(query_WorkerProcess, (workerId, obj.operatorCode, obj.processCode, util().getNow(), util().getUIID(), ))
-        conn.commit()
-        conn.close()
+        print('--------createWorker bas----')
+        print(str(operatorList))
+        if len(operatorList) > 0:
+            conn = DbController().getConnection()
+            cmd = conn.cursor()
+            jobId = JobController().createJob(jobOrderNumber)
+            for operatorId in operatorList:
+                query_Worker = "INSERT INTO Worker (JobId, OperatorId, CreatedTime, Guid) VALUES (?, ?, ?, ?)"
+                cmd.execute(query_Worker, (jobId, operatorId, util().getNow(), util().getUIID(),))
+                workerId = cmd.lastrowid
+                for obj in operatorProcessList:
+                    if operatorId == obj.operatorCode:
+                        query_WorkerProcess = "INSERT INTO WorkerProcess (WorkerId, OperatorId, ProcessId, CreatedTime, Guid) VALUES (?, ?, ?, ?, ?)"
+                        cmd.execute(query_WorkerProcess, (workerId, obj.operatorCode, obj.processCode, util().getNow(), util().getUIID(),))
+            conn.commit()
+            conn.close()
         return jobId
+        print('--------createWorker bit----')
 
 
     def getWorkersForJobOrderNumber(self, jobId):
+        print('-----getWorkersForJobOrderNumber-----' + str(jobId))
         conn = DbController().getConnection()
         cmd = conn.cursor()
-        query_getWorkers = "SELECT j.Id, wp.OperatorId, wp.ProcessId, wp.CreatedTime FROM WorkerProcess wp " \
+        query_getWorkers = "SELECT wp.Id, j.Id, wp.OperatorId, wp.ProcessId, wp.CreatedTime FROM WorkerProcess wp " \
                            "INNER JOIN Worker w ON w.Id = wp.WorkerId " \
                            "INNER JOIN Job j ON j.Id = w.JobId " \
                            "WHERE j.Id = ?"
