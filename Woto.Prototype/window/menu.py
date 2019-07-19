@@ -37,17 +37,15 @@ def centerWidget(widget):
 class Menu(QWidget):
 
 
-    def __init__(self):
-        super(Menu, self).__init__()
+    def _buildUI(self, Window):
 
-        DbController().initDb()
-
-        self.setLayout(self._buildUI())
+        self.setLayout(self._buildMain())
         # self.show()
         self.showFullScreen()
 
 
-    def _buildUI(self):
+    def _buildMain(self):
+
 
         btnStartProduction = QPushButton('ÜRETİM BAŞLAT')
         btnStartProduction.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
