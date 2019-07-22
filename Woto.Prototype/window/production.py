@@ -8,6 +8,8 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
+from controller.utilController import UtilController as util, Constant as const, WButton, WLed, WFooter, WHeader
+
 #region MODELS
 from model.job import Job
 from model.workerProcess import WorkerProcess
@@ -19,17 +21,10 @@ from controller.utilController import UtilController as util
 from controller.workerController import WorkerController
 #endregion
 
-# Sabitler
 
-piResolutionWidth = 800
-piResolutionHeight = 480
-
-fontSize20 = QFont()
-fontSize20.setPointSize(20)
-
-heightHeader = 40
 heightContent = 50
-heightFooter = 50
+
+
 
 
 class CQLineEdit(QLineEdit):
@@ -55,7 +50,7 @@ def centerWidget(widget):
 
 class Production(QWidget):
 
-
+    startStopStatus = False
 
 
     def _buildUI(self, Window):
@@ -75,57 +70,59 @@ class Production(QWidget):
 
     def _buildMain(self):
 
+        self.setStyleSheet("background-color: " + const.color_smoothgray)
+
         boxRoot = QVBoxLayout()
+        boxRoot.setContentsMargins(0, 0, 0, 0)
+        boxRoot.setSpacing(0)
+
+        widgetHeader = QWidget()
+        widgetHeader.setFixedHeight(const.widgetHeaderHeight)
+        widgetHeader.setStyleSheet("background-color: " + const.color_wgrBlue_hex)
+
+        boxHeader = WHeader('ÜRETİM İZLEME', const.region)
+
+
+        widgetHeader.setLayout(boxHeader)
+
+        boxRoot.addWidget(widgetHeader)
 
         #region HEADER
 
-        gridHeader = QGridLayout()
-        gridHeader.setAlignment(Qt.AlignTop)
+        self.widgetStatusHeader = QWidget()
+        self.widgetStatusHeader.setStyleSheet("color: white; background-color: " + const.color_darkgray_hex)
+        self.widgetStatusHeader.setFixedHeight(const.widgetHeaderHeight)
 
-        lblJobOrderNumber = QLabel('Emir:')
-        lblJobOrderNumber.setAlignment(Qt.AlignLeft)
-        lblJobOrderNumber.setFixedHeight(heightHeader)
-        lblJobOrderNumber.setFont(fontSize20)
-        gridHeader.addWidget(lblJobOrderNumber, 0, 0)
+        boxStatusHeader = QHBoxLayout()
 
-        self.valJobOrderNumber = QLabel()
+        self.valJobOrderNumber = QLabel('EMİR BEKLENİYOR...')
+        self.valJobOrderNumber.setContentsMargins(5, 0, 0, 0)
         self.valJobOrderNumber.setAlignment(Qt.AlignLeft)
-        self.valJobOrderNumber.setFixedHeight(heightHeader)
-        self.valJobOrderNumber.setFont(fontSize20)
-        gridHeader.addWidget(self.valJobOrderNumber, 1, 0)
-
-        lblCounter = QLabel('Sağlam / Fire:')
-        lblCounter.setAlignment(Qt.AlignVCenter)
-        lblCounter.setAlignment(Qt.AlignHCenter)
-        lblCounter.setFixedHeight(heightHeader)
-        lblCounter.setFont(fontSize20)
-        gridHeader.addWidget(lblCounter, 0, 1)
+        self.valJobOrderNumber.setFont(const.font_fontSize20)
+        boxStatusHeader.addWidget(self.valJobOrderNumber)
 
         self.valCounter = QLabel('0 / 0')
         self.valCounter.setAlignment(Qt.AlignVCenter)
         self.valCounter.setAlignment(Qt.AlignHCenter)
-        self.valCounter.setFixedHeight(heightHeader)
-        self.valCounter.setFont(fontSize20)
-        gridHeader.addWidget(self.valCounter, 1, 1)
+        self.valCounter.setFont(const.font_fontSize20)
+        boxStatusHeader.addWidget(self.valCounter)
 
-        lblRegion = QLabel('Hücre:')
-        lblRegion.setAlignment(Qt.AlignRight)
-        lblRegion.setFixedHeight(heightHeader)
-        lblRegion.setFont(fontSize20)
-        gridHeader.addWidget(lblRegion, 0, 2)
+        self.valStatus = QLabel('ÇALIŞMIYOR')
+        self.valStatus.setContentsMargins(0, 0, 5, 0)
+        self.valStatus.setAlignment(Qt.AlignRight)
+        self.valStatus.setFont(const.font_fontSize20)
+        boxStatusHeader.addWidget(self.valStatus)
 
-        self.valRegion = QLabel(util().region)
-        self.valRegion.setAlignment(Qt.AlignRight)
-        self.valRegion.setFixedHeight(heightHeader)
-        self.valRegion.setFont(fontSize20)
-        gridHeader.addWidget(self.valRegion, 1, 2)
+        # lineH = QFrame()
+        # lineH.setFrameShape(QFrame.HLine)
+        # lineH.setFrameShadow(QFrame.Sunken)
+        # boxStatusHeader.addWidget(lineH)
 
-        lineH = QFrame()
-        lineH.setFrameShape(QFrame.HLine)
-        lineH.setFrameShadow(QFrame.Sunken)
-        gridHeader.addWidget(lineH, 2, 0, 1, 3)
+        boxStatusHeader.setAlignment(Qt.AlignTop)
 
-        boxRoot.addLayout(gridHeader)
+        self.widgetStatusHeader.setLayout(boxStatusHeader)
+
+        boxRoot.addWidget(self.widgetStatusHeader)
 
         #endregion
 
@@ -134,6 +131,7 @@ class Production(QWidget):
         gridContent = QGridLayout()
 
         self.tableWorker = QTableWidget()
+        self.tableWorker.setStyleSheet('background-color: white;')
         self.tableWorker.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.tableWorker.setCornerButtonEnabled(True)
         self.tableWorker.setSortingEnabled(True)
@@ -154,36 +152,44 @@ class Production(QWidget):
         lineB.setFrameShadow(QFrame.Sunken)
         gridFooter.addWidget(lineB, 0, 0, 1, 3)
 
-        btnClose = QPushButton('KAPAT')
+        btnClose = WButton('KAPAT')
         btnClose.clicked.connect(self.btnClick_btnClose)
-        # self.btnClose.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnClose.setFixedHeight(heightFooter)
-        btnClose.setFont(fontSize20)
+        btnClose.setFixedHeight(70)
         gridFooter.addWidget(btnClose, 1, 0)
 
-        btnStartStop = QPushButton('Başla')
-        # btnStartStop.clicked.connect(self.deleteOperatorProcess)
-        btnStartStop.setFixedHeight(heightFooter)
-        btnStartStop.setFont(fontSize20)
-        gridFooter.addWidget(btnStartStop, 1, 1)
+        self.btnStartStop = WButton('BAŞLA')
+        self.btnStartStop.setDisabled(True)
+        self.btnStartStop.clicked.connect(self.btnClick_btnStartStop)
+        self.btnStartStop.setFixedHeight(70)
+        gridFooter.addWidget(self.btnStartStop, 1, 1)
 
         gridAddDeleteOperator = QGridLayout()
 
-        btnAddOperator = QPushButton('(+) Opt/Prs')
-        btnAddOperator.clicked.connect(self._showDialogStep2)
-        btnAddOperator.setFixedHeight(heightFooter)
-        btnAddOperator.setFont(fontSize20)
-        gridAddDeleteOperator.addWidget(btnAddOperator, 0, 0)
+        self.btnAddOperator = WButton('(+) OPT/PRS')
+        self.btnAddOperator.setDisabled(True)
+        self.btnAddOperator.clicked.connect(self._showDialogStep2)
+        self.btnAddOperator.setFixedHeight(70)
+        gridAddDeleteOperator.addWidget(self.btnAddOperator, 0, 0)
 
-        btnDeleteOperator = QPushButton('(-) Opt/Prs')
-        btnDeleteOperator.clicked.connect(self.deleteOperatorProcess)
-        btnDeleteOperator.setFixedHeight(heightFooter)
-        btnDeleteOperator.setFont(fontSize20)
-        gridAddDeleteOperator.addWidget(btnDeleteOperator, 0, 1)
+        self.btnDeleteOperator = WButton('(-) OPT/PRS')
+        self.btnDeleteOperator.setDisabled(True)
+        self.btnDeleteOperator.clicked.connect(self.deleteOperatorProcess)
+        self.btnDeleteOperator.setFixedHeight(70)
+        gridAddDeleteOperator.addWidget(self.btnDeleteOperator, 0, 1)
 
         gridFooter.addLayout(gridAddDeleteOperator, 1, 2)
 
         boxRoot.addLayout(gridFooter)
+
+        widgetFooter = QWidget()
+        widgetFooter.setFixedHeight(30)
+        widgetFooter.setStyleSheet("background-color: " + const.color_wgrBlue_hex)
+
+        boxFooter = WFooter()
+
+        widgetFooter.setLayout(boxFooter)
+
+        boxRoot.addWidget(widgetFooter)
 
         #endregion
 
@@ -199,25 +205,27 @@ class Production(QWidget):
         self.focusedCQLineEdit = CQLineEdit()
 
         self.step1Dialog = QDialog()
+        self.step1Dialog.setStyleSheet("background-color: " + const.color_smoothgray)
         self.step1Dialog.setLayout(self._buildStep1())
         self.step1Dialog.setWindowTitle('Emir No giriniz...')
         # self.step1Dialog.setWindowFlag(Qt.FramelessWindowHint)
         self.step1Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
-        self.step1Dialog.setWindowOpacity(0.9)
         self.step1Dialog.resize(600, 380)
         self.step1Dialog.exec()
         centerWidget(self.step1Dialog)
+        self.step1Dialog.setContentsMargins(0, 0, 0, 0)
+
 
     def _showDialogStep2(self):
 
         self.focusedCQLineEdit = CQLineEdit()
 
         self.step2Dialog = QDialog()
+        self.step2Dialog.setStyleSheet("background-color: " + const.color_smoothgray)
         self.step2Dialog.setLayout(self._buildStep2())
         self.step2Dialog.setWindowTitle('Operatör ve Proses giriniz...')
         # self.step2Dialog.setWindowFlag(Qt.FramelessWindowHint)
         self.step2Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
-        self.step2Dialog.setWindowOpacity(0.9)
         self.step2Dialog.resize(600, 380)
         self.step2Dialog.exec()
         centerWidget(self.step2Dialog)
@@ -232,9 +240,29 @@ class Production(QWidget):
     def _buildStep1(self):
 
         boxRoot = QVBoxLayout()
+        boxRoot.setContentsMargins(0, 0, 0, 0)
+
+        widgetHeader = QWidget()
+        widgetHeader.setFixedHeight(50)
+        widgetHeader.setStyleSheet("background-color: " + const.color_wgrBlue_hex)
+
+
+        boxHeader = QHBoxLayout()
+
+        labelTitle = QLabel('EMİR GİRİNİZ...')
+        labelTitle.setFont(const.font_fontSize15)
+        labelTitle.setStyleSheet("color: white;")
+        labelTitle.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+        boxHeader.addWidget(labelTitle)
+
+        widgetHeader.setLayout(boxHeader)
+
+        boxRoot.addWidget(widgetHeader)
 
         txtJobOrderNumber = CQLineEdit()
-        txtJobOrderNumber.setFont(fontSize20)
+        txtJobOrderNumber.setContentsMargins(5, 5, 5, 0)
+        txtJobOrderNumber.setStyleSheet("border-radius: 3px; background-color:white;")
+        txtJobOrderNumber.setFont(const.font_fontSize20)
         txtJobOrderNumber.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
         txtJobOrderNumber.setPlaceholderText('Ör: 19-123')
         txtJobOrderNumber.clicked.connect(self.focusedLE)
@@ -242,33 +270,23 @@ class Production(QWidget):
 
         gridNumpad = self._buildNumPad()
 
-        btnHyphen = QPushButton('-')
-        btnHyphen.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnHyphen.setFont(fontSize20)
+        btnHyphen = WButton('-')
         btnHyphen.clicked.connect(self.btnClick_btnNumi)
         gridNumpad.addWidget(btnHyphen, 0, 3, 1, 1)
 
-        btnDel = QPushButton('SİL')
-        btnDel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnDel.setFont(fontSize20)
+        btnDel = WButton('SİL')
         btnDel.clicked.connect(self.btnClick_btnDel)
         gridNumpad.addWidget(btnDel, 1, 3, 2, 1)
 
-        btnReject = QPushButton('KAPAT')
-        btnReject.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnReject.setFont(fontSize20)
+        btnReject = WButton('KAPAT')
         btnReject.clicked.connect(lambda: self.btnClick_btnReject(self.step1Dialog))
         gridNumpad.addWidget(btnReject, 3, 0)
 
-        btnNum0 = QPushButton('0')
-        btnNum0.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnNum0.setFont(fontSize20)
+        btnNum0 = WButton('0')
         btnNum0.clicked.connect(self.btnClick_btnNumi)
         gridNumpad.addWidget(btnNum0, 3, 1)
 
-        btnNextStep2 = QPushButton('DEVAM')
-        btnNextStep2.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnNextStep2.setFont(fontSize20)
+        btnNextStep2 = WButton('DEVAM')
         btnNextStep2.clicked.connect(lambda: self.btnClick_btnNextStep2(txtJobOrderNumber.text()))
         gridNumpad.addWidget(btnNextStep2, 3, 2, 1, 2)
 
@@ -285,10 +303,30 @@ class Production(QWidget):
         gridNumpad = self._buildNumPad()
         gridInput = QGridLayout()
         boxRoot = QVBoxLayout()
+        boxRoot.setContentsMargins(0, 0, 0, 0)
+
+
+        widgetHeader = QWidget()
+        widgetHeader.setFixedHeight(50)
+        widgetHeader.setStyleSheet("background-color: " + const.color_wgrBlue_hex)
+
+        boxHeader = QHBoxLayout()
+
+        labelTitle = QLabel('SİCİL ve PROSES GİRİNİZ...')
+        labelTitle.setFont(const.font_fontSize15)
+        labelTitle.setStyleSheet("color: white;")
+        labelTitle.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+        boxHeader.addWidget(labelTitle)
+
+        widgetHeader.setLayout(boxHeader)
+
+        boxRoot.addWidget(widgetHeader)
 
         txtOperatorCode = CQLineEdit()
         txtOperatorCode.setObjectName('txtOperatorCode')
-        txtOperatorCode.setFont(fontSize20)
+        txtOperatorCode.setContentsMargins(5, 5, 5, 0)
+        txtOperatorCode.setStyleSheet("border-radius: 3px; background-color:white;")
+        txtOperatorCode.setFont(const.font_fontSize20)
         txtOperatorCode.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
         txtOperatorCode.setPlaceholderText('Ör: 1686')
         txtOperatorCode.clicked.connect(self.focusedLE)
@@ -297,39 +335,31 @@ class Production(QWidget):
 
         txtProcessCode = CQLineEdit()
         txtProcessCode.setObjectName('txtProcessCode')
-        txtProcessCode.setFont(fontSize20)
+        txtProcessCode.setContentsMargins(5, 5, 5, 0)
+        txtProcessCode.setStyleSheet("border-radius: 3px; background-color:white;")
+        txtProcessCode.setFont(const.font_fontSize20)
         txtProcessCode.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
         txtProcessCode.setPlaceholderText('Ör: 1001')
         txtProcessCode.clicked.connect(self.focusedLE)
         gridInput.addWidget(txtProcessCode, 0, 3, 1, 2)
 
-        btnHyphen = QPushButton('-')
-        btnHyphen.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnHyphen.setFont(fontSize20)
+        btnHyphen = WButton('-')
         btnHyphen.clicked.connect(self.btnClick_btnNumi)
         gridNumpad.addWidget(btnHyphen, 0, 3, 1, 1)
 
-        btnDel = QPushButton('SİL')
-        btnDel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnDel.setFont(fontSize20)
+        btnDel = WButton('SİL')
         btnDel.clicked.connect(self.btnClick_btnDel)
         gridNumpad.addWidget(btnDel, 1, 3, 2, 1)
 
-        btnReject = QPushButton('KAPAT')
-        btnReject.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnReject.setFont(fontSize20)
+        btnReject = WButton('KAPAT')
         btnReject.clicked.connect(self.btnClick_btnSubmitOperators)
         gridNumpad.addWidget(btnReject, 3, 0)
 
-        btnNum0 = QPushButton('0')
-        btnNum0.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnNum0.setFont(fontSize20)
+        btnNum0 = WButton('0')
         btnNum0.clicked.connect(self.btnClick_btnNumi)
         gridNumpad.addWidget(btnNum0, 3, 1)
 
-        btnAddOperator = QPushButton('EKLE')
-        btnAddOperator.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnAddOperator.setFont(fontSize20)
+        btnAddOperator = WButton('EKLE')
         btnAddOperator.clicked.connect(lambda: self.btnClick_btnAddOperator(txtOperatorCode.text(), txtProcessCode.text()))
         gridNumpad.addWidget(btnAddOperator, 3, 2, 1, 2)
 
@@ -350,11 +380,8 @@ class Production(QWidget):
 
         for i in range(3):
             for j in range(3):
-                btnNumi = QPushButton()
-                btnNumi.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-                btnNumi.setText(str(txtNum))
+                btnNumi = WButton(str(txtNum))
                 btnNumi.clicked.connect(self.btnClick_btnNumi)
-                btnNumi.setFont(fontSize20)
                 txtNum = txtNum + 1
                 gridNumpad.addWidget(btnNumi, i, j)
         return gridNumpad
@@ -419,9 +446,13 @@ class Production(QWidget):
             print('--------------------deleteOperatorProcess bitisi--------------------')
 
     def btnClick_btnNextStep2(self, jobOrderNumber):
-        self.valJobOrderNumber.setText(jobOrderNumber)
-        self.btnClick_btnReject(self.step1Dialog)
-        self._showDialogStep2()
+        if jobOrderNumber.strip() != "":
+            self.btnStartStop.setEnabled(True)
+            self.btnAddOperator.setEnabled(True)
+            self.btnDeleteOperator.setEnabled(True)
+            self.valJobOrderNumber.setText(jobOrderNumber)
+            self.btnClick_btnReject(self.step1Dialog)
+            self._showDialogStep2()
 
     def btnClick_btnClose(self):
         self.operatorProcessList = []
@@ -441,6 +472,16 @@ class Production(QWidget):
 
     def btnClick_btnDel(self):
         self.focusedCQLineEdit.setText(self.focusedCQLineEdit.text()[:-1])
+        
+    def btnClick_btnStartStop(self):
+        if self.startStopStatus == True:
+            self.valStatus.setText('ÇALIŞMIYOR')
+            self.widgetStatusHeader.setStyleSheet("color: white; background-color: " + const.color_darkgray_hex)
+            self.startStopStatus = False
+        else:
+            self.valStatus.setText('ÇALIŞIYOR')
+            self.widgetStatusHeader.setStyleSheet("color: white; background-color: " + const.color_success_hex)
+            self.startStopStatus = True
 
     def btnClick_btnAddOperator(self, operatorCode, processCode):
 

@@ -2,6 +2,7 @@
 import os, sys, inspect
 
 from controller.dbController import DbController
+from controller.utilController import Constant as cons
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
@@ -33,7 +34,7 @@ class Main(QMainWindow):
 
     def __init__(self):
         super(Main, self).__init__()
-        logoUrl = "asset/img/logo/nonbg_logo.png"
+        logoUrl = cons.logo_nonbg
 
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -56,7 +57,7 @@ class Main(QMainWindow):
         title.setAlignment(Qt.AlignCenter)
         boxTitle.addWidget(title)
 
-        subtitle = QLabel('prototype')
+        subtitle = QLabel('prototype v0.01')
         subtitle.setStyleSheet('color:white; font-size:20px; font-style:italic')
         subtitle.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         subtitle.setAlignment(Qt.AlignCenter)
@@ -66,7 +67,7 @@ class Main(QMainWindow):
 
 
         self.resize(piResolutionWidth, piResolutionHeight)
-        self.setStyleSheet('background-color:#092C74')
+        self.setStyleSheet('background-color:' + cons.color_wgrBlue_hex)
 
         print(self.height())
 

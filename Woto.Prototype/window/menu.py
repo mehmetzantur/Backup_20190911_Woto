@@ -8,20 +8,8 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from controller.dbController import DbController
+from controller.utilController import UtilController as util, Constant as const, WMenuButton, WLed, WHeader
 from window.production import Production
-
-
-
-
-# Sabitler
-
-piResolutionWidth = 800
-piResolutionHeight = 480
-
-fontSize20 = QFont()
-fontSize20.setPointSize(20)
-
 
 
 
@@ -34,69 +22,111 @@ def centerWidget(widget):
     frameGm.moveCenter(centerPoint)
     widget.move(frameGm.topLeft())
 
+
+
 class Menu(QWidget):
 
 
     def _buildUI(self, Window):
 
+        self.resize(const.piResolutionWidth, const.piResolutionHeight)
+        oImage = QImage(const.bg_main_blur)
+        sImage = oImage.scaled(QSize(const.piResolutionWidth, const.piResolutionHeight))  # resize Image to widgets size
+        palette = QPalette()
+        palette.setBrush(10, QBrush(sImage))  # 10 = Windowrole
+        self.setPalette(palette)
+
+        #self.label = QLabel('Test', self)  # test, if it's really backgroundimage
+        #self.label.setGeometry(50, 50, 200, 50)
+        #css = "background-color:" + const.color_wgrBlue
+        css = "background-image: url(asset/img/bg/mainbg.png)"
+        #self.setStyleSheet(css)
         self.setLayout(self._buildMain())
-        # self.show()
-        self.showFullScreen()
+
+        self.show()
+        #self.showFullScreen()
 
 
     def _buildMain(self):
+        boxRoot = QVBoxLayout()
+        boxRoot.setContentsMargins(0, 0, 0, 0)
+
+        widgetHeader = QWidget()
+        widgetHeader.setFixedHeight(const.widgetHeaderHeight)
+        widgetHeader.setStyleSheet("background-color: " + const.color_wgrBlue_hex)
+
+        boxHeader = WHeader('WOTO', const.region)
+
+        widgetHeader.setLayout(boxHeader)
+
+        boxRoot.addWidget(widgetHeader)
 
 
-        btnStartProduction = QPushButton('ÜRETİM BAŞLAT')
-        btnStartProduction.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        btnStartProduction = WMenuButton('ÜRETİM BAŞLAT', const.menu_icon_production)
         btnStartProduction.clicked.connect(self.showProductionWindow)
-        btnStartProduction.setFont(fontSize20)
 
-        btnMenu2 = QPushButton('MENÜ2')
-        btnMenu2.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnMenu2.setFont(fontSize20)
+        btnMenu2 = WMenuButton('MENÜ2', const.menu_icon_star)
 
-        btnMenu3 = QPushButton('MENÜ3')
-        btnMenu3.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnMenu3.setFont(fontSize20)
+        btnMenu3 = WMenuButton('MENÜ3', const.menu_icon_star)
 
-        btnMenu4 = QPushButton('MENÜ4')
-        btnMenu4.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnMenu4.setFont(fontSize20)
+        btnMenu4 = WMenuButton('MENÜ4', const.menu_icon_star)
 
-        btnMenu5 = QPushButton('MENÜ5')
-        btnMenu5.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnMenu5.setFont(fontSize20)
+        btnMenu5 = WMenuButton('MENÜ5', const.menu_icon_star)
 
-        btnMenu6 = QPushButton('MENÜ6')
-        btnMenu6.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnMenu6.setFont(fontSize20)
+        btnMenu6 = WMenuButton('MENÜ6', const.menu_icon_star)
 
-        btnMenu7 = QPushButton('MENÜ7')
-        btnMenu7.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnMenu7.setFont(fontSize20)
+        btnMenu7 = WMenuButton('AYARLAR', const.menu_icon_settings)
 
-        btnMenu8 = QPushButton('MENÜ8')
-        btnMenu8.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        btnMenu8.setFont(fontSize20)
-
-        btnClose = QPushButton('KAPAT')
-        btnClose.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        btnClose = WMenuButton('KAPAT', const.menu_icon_poweroff)
         btnClose.clicked.connect(QCoreApplication.instance().quit)
-        btnClose.setFont(fontSize20)
 
-        menuGrid = QGridLayout()
-        menuGrid.addWidget(btnStartProduction, 0, 0)
-        menuGrid.addWidget(btnMenu2, 0, 1)
-        menuGrid.addWidget(btnMenu3, 0, 2)
-        menuGrid.addWidget(btnMenu4, 1, 0)
-        menuGrid.addWidget(btnMenu5, 1, 1)
-        menuGrid.addWidget(btnMenu6, 1, 2)
-        menuGrid.addWidget(btnMenu7, 2, 0)
-        menuGrid.addWidget(btnMenu8, 2, 1)
-        menuGrid.addWidget(btnClose, 2, 2)
+        gridMenu = QGridLayout()
+        gridMenu.setContentsMargins(10, 5, 10, 5)
+        gridMenu.addWidget(btnStartProduction, 0, 0)
+        gridMenu.addWidget(btnMenu2, 0, 1)
+        gridMenu.addWidget(btnMenu3, 0, 2)
+        gridMenu.addWidget(btnMenu4, 0, 3)
+        gridMenu.addWidget(btnMenu5, 1, 0)
+        gridMenu.addWidget(btnMenu6, 1, 1)
+        gridMenu.addWidget(btnMenu7, 1, 2)
+        gridMenu.addWidget(btnClose, 1, 3)
 
-        return menuGrid
+        boxRoot.addLayout(gridMenu)
+
+        widgetFooter = QWidget()
+        widgetFooter.setFixedHeight(30)
+        widgetFooter.setStyleSheet("background-color: " + const.color_wgrBlue_hex)
+
+        boxFooter = QHBoxLayout()
+
+        labelLeft = QLabel(const.version)
+        labelLeft.setFont(const.font_fontSize10)
+        labelLeft.setStyleSheet("color: white;")
+        labelLeft.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+        boxFooter.addWidget(labelLeft)
+
+        ledOk = WLed(const.color_success_hex)
+        boxFooter.addWidget(ledOk)
+
+        ledWarning = WLed(const.color_warning_hex)
+        boxFooter.addWidget(ledWarning)
+
+        ledError = WLed(const.color_error_hex)
+        boxFooter.addWidget(ledError)
+
+        ledOff = WLed(const.color_darkgray_hex)
+        boxFooter.addWidget(ledOff)
+
+        labelRight = QLabel('20:57')
+        labelRight.setFont(const.font_fontSize10)
+        labelRight.setStyleSheet("color: white;")
+        labelRight.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        boxFooter.addWidget(labelRight)
+
+        widgetFooter.setLayout(boxFooter)
+
+        boxRoot.addWidget(widgetFooter)
+        return boxRoot
 
 
     def showProductionWindow(self):
