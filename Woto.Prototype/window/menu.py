@@ -43,8 +43,8 @@ class Menu(QWidget):
         #self.setStyleSheet(css)
         self.setLayout(self._buildMain())
 
-        self.show()
-        #self.showFullScreen()
+        # self.show()
+        self.showFullScreen()
 
 
     def _buildMain(self):
