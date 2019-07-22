@@ -16,10 +16,11 @@ class DbController:
         cmd.execute(CT_WorkerProcess)
         conn.commit()
         conn.close()
+        return "Tables are created."
 
 
     def getConnection(self):
-        conn = sql.connect("..\\db.sqlite")
+        conn = sql.connect("db.sqlite")
         if conn == False:
             print('not connected')
             return None

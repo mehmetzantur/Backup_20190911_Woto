@@ -5,7 +5,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
 from controller.dbController import DbController
-from controller.utilController import UtilController as util
+from controller.utilController import UtilController as util, Constant as const
 
 class JobController:
 
@@ -16,7 +16,7 @@ class JobController:
     def createJob(self, jobOrderNumber):
         conn = DbController().getConnection()
         cmd = conn.cursor()
-        cmd.execute("INSERT INTO Job (JobOrderNumber, Region, CreatedTime, Guid) VALUES (?, ?, ?, ?)", (jobOrderNumber, util().region, util().getNow(), util().getUIID(),))
+        cmd.execute("INSERT INTO Job (JobOrderNumber, Region, CreatedTime, Guid) VALUES (?, ?, ?, ?)", (jobOrderNumber, const.region, util().getNow(), util().getUIID(),))
         conn.commit()
         conn.close()
         return cmd.lastrowid
