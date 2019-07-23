@@ -208,12 +208,13 @@ class Production(QWidget):
         self.step1Dialog.setStyleSheet("background-color: " + const.color_smoothgray)
         self.step1Dialog.setLayout(self._buildStep1())
         self.step1Dialog.setWindowTitle('Emir No giriniz...')
-        # self.step1Dialog.setWindowFlag(Qt.FramelessWindowHint)
+        self.step1Dialog.setWindowFlag(Qt.FramelessWindowHint)
         self.step1Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
-        self.step1Dialog.resize(600, 380)
+        self.step1Dialog.resize(const.piResolutionWidth, const.piResolutionHeight)
         self.step1Dialog.exec()
         centerWidget(self.step1Dialog)
         self.step1Dialog.setContentsMargins(0, 0, 0, 0)
+
 
 
     def _showDialogStep2(self):
@@ -224,9 +225,9 @@ class Production(QWidget):
         self.step2Dialog.setStyleSheet("background-color: " + const.color_smoothgray)
         self.step2Dialog.setLayout(self._buildStep2())
         self.step2Dialog.setWindowTitle('Operatör ve Proses giriniz...')
-        # self.step2Dialog.setWindowFlag(Qt.FramelessWindowHint)
+        self.step2Dialog.setWindowFlag(Qt.FramelessWindowHint)
         self.step2Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
-        self.step2Dialog.resize(600, 380)
+        self.step2Dialog.resize(const.piResolutionWidth, const.piResolutionHeight)
         self.step2Dialog.exec()
         centerWidget(self.step2Dialog)
 
@@ -265,8 +266,9 @@ class Production(QWidget):
         txtJobOrderNumber.setFont(const.font_fontSize20)
         txtJobOrderNumber.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
         txtJobOrderNumber.setPlaceholderText('Ör: 19-123')
-        txtJobOrderNumber.clicked.connect(self.focusedLE)
+        txtJobOrderNumber.clicked.connect(lambda: self.focusedLE(txtJobOrderNumber))
         boxRoot.addWidget(txtJobOrderNumber)
+        self.focusedLE(txtJobOrderNumber)
 
         gridNumpad = self._buildNumPad()
 
@@ -322,26 +324,30 @@ class Production(QWidget):
 
         boxRoot.addWidget(widgetHeader)
 
-        txtOperatorCode = CQLineEdit()
-        txtOperatorCode.setObjectName('txtOperatorCode')
-        txtOperatorCode.setContentsMargins(5, 5, 5, 0)
-        txtOperatorCode.setStyleSheet("border-radius: 3px; background-color:white;")
-        txtOperatorCode.setFont(const.font_fontSize20)
-        txtOperatorCode.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
-        txtOperatorCode.setPlaceholderText('Ör: 1686')
-        txtOperatorCode.clicked.connect(self.focusedLE)
-        gridInput.addWidget(txtOperatorCode, 0, 0, 1, 2)
+        self.txtOperatorCode = CQLineEdit()
+        self.count_txtOperatorCode = 0
+        self.txtOperatorCode.setObjectName('txtOperatorCode')
+        self.txtOperatorCode.setContentsMargins(5, 5, 5, 0)
+        self.txtOperatorCode.setStyleSheet("border-radius: 3px; background-color:white;")
+        self.txtOperatorCode.setFont(const.font_fontSize20)
+        self.txtOperatorCode.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+        self.txtOperatorCode.setPlaceholderText('Ör: 1686')
+        self.txtOperatorCode.clicked.connect(lambda: self.focusedLE(self.txtOperatorCode))
+        self.txtOperatorCode.textChanged.connect(self.txtChanged_txtOperatorCode)
+        gridInput.addWidget(self.txtOperatorCode, 0, 0, 1, 2)
+        self.focusedLE(self.txtOperatorCode)
 
 
-        txtProcessCode = CQLineEdit()
-        txtProcessCode.setObjectName('txtProcessCode')
-        txtProcessCode.setContentsMargins(5, 5, 5, 0)
-        txtProcessCode.setStyleSheet("border-radius: 3px; background-color:white;")
-        txtProcessCode.setFont(const.font_fontSize20)
-        txtProcessCode.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
-        txtProcessCode.setPlaceholderText('Ör: 1001')
-        txtProcessCode.clicked.connect(self.focusedLE)
-        gridInput.addWidget(txtProcessCode, 0, 3, 1, 2)
+        self.txtProcessCode = CQLineEdit()
+        self.txtProcessCode.setObjectName('txtProcessCode')
+        self.txtProcessCode.setContentsMargins(5, 5, 5, 0)
+        self.txtProcessCode.setStyleSheet("border-radius: 3px; background-color:white;")
+        self.txtProcessCode.setFont(const.font_fontSize20)
+        self.txtProcessCode.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+        self.txtProcessCode.setPlaceholderText('Ör: 1001')
+        self.txtProcessCode.clicked.connect(lambda: self.focusedLE(self.txtProcessCode))
+        self.txtProcessCode.textChanged.connect(self.txtChanged_txtProcessCode)
+        gridInput.addWidget(self.txtProcessCode, 0, 3, 1, 2)
 
         btnHyphen = WButton('-')
         btnHyphen.clicked.connect(self.btnClick_btnNumi)
@@ -360,7 +366,7 @@ class Production(QWidget):
         gridNumpad.addWidget(btnNum0, 3, 1)
 
         btnAddOperator = WButton('EKLE')
-        btnAddOperator.clicked.connect(lambda: self.btnClick_btnAddOperator(txtOperatorCode.text(), txtProcessCode.text()))
+        btnAddOperator.clicked.connect(lambda: self.btnClick_btnAddOperator(self.txtOperatorCode.text(), self.txtProcessCode.text()))
         gridNumpad.addWidget(btnAddOperator, 3, 2, 1, 2)
 
         boxRoot.addLayout(gridInput)
@@ -484,14 +490,14 @@ class Production(QWidget):
             self.startStopStatus = True
 
     def btnClick_btnAddOperator(self, operatorCode, processCode):
+        if len(operatorCode) == 4 or len(processCode) == 4:
+            objOperatorProcess = vmOperatorProcess(operatorCode, processCode)
+            self.operatorProcessList.append(objOperatorProcess)
+            if operatorCode not in self.operatorList:
+                self.operatorList.append(operatorCode)
 
-        objOperatorProcess = vmOperatorProcess(operatorCode, processCode)
-        self.operatorProcessList.append(objOperatorProcess)
-        if operatorCode not in self.operatorList:
-            self.operatorList.append(operatorCode)
-
-        self.btnClick_btnReject(self.step2Dialog)
-        self._showDialogStep2()
+            self.btnClick_btnReject(self.step2Dialog)
+            self._showDialogStep2()
 
     def btnClick_btnSubmitOperators(self):
 
@@ -538,11 +544,24 @@ class Production(QWidget):
 
         self.btnClick_btnReject(self.step2Dialog)
 
-    def focusedLE(self):
-        #print(self.sender())
-        self.focusedCQLineEdit = self.sender()
+    def focusedLE(self, txtObject):
+        print(txtObject)
+        self.focusedCQLineEdit = txtObject
 
     #endregion
+
+
+    def txtChanged_txtOperatorCode(self):
+        if len(self.txtOperatorCode.text()) == 4:
+            self.focusedLE(self.txtProcessCode)
+
+
+
+    def txtChanged_txtProcessCode(self):
+        if len(self.txtProcessCode.text()) == 4:
+            self.btnClick_btnAddOperator(self.txtOperatorCode.text(), self.txtProcessCode.text())
+
+
 
 def main():
     app = QApplication(sys.argv)
