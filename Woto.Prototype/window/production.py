@@ -213,7 +213,7 @@ class Production(QWidget):
         self.step1Dialog.setWindowTitle('Emir No giriniz...')
         self.step1Dialog.setWindowFlag(Qt.FramelessWindowHint)
         self.step1Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
-        self.step1Dialog.resize(600, 300)
+        self.step1Dialog.resize(600, 400)
         self.step1Dialog.exec()
         # self.step1Dialog.showFullScreen()
         centerWidget(self.step1Dialog)
@@ -231,9 +231,9 @@ class Production(QWidget):
         self.step2Dialog.setWindowTitle('Operatör ve Proses giriniz...')
         self.step2Dialog.setWindowFlag(Qt.FramelessWindowHint)
         self.step2Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
-        self.step2Dialog.resize(600, 300)
-        self.step2Dialog.exec()
-        # self.step2Dialog.showFullScreen()
+        # self.step2Dialog.resize(600, 400)
+        # self.step2Dialog.exec()
+        self.step2Dialog.showFullScreen()
         centerWidget(self.step2Dialog)
 
     #endregion
