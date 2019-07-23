@@ -53,7 +53,10 @@ class Production(QWidget):
     startStopStatus = False
 
 
+
     def _buildUI(self, Window):
+
+        self.focusedCQLineEdit = CQLineEdit()
 
         # region VARIABLES
         self.operatorProcessList = []
@@ -202,17 +205,17 @@ class Production(QWidget):
 
     def _showDialogStep1(self):
 
-        self.focusedCQLineEdit = CQLineEdit()
+
 
         self.step1Dialog = QDialog()
-        self.step1Dialog.setStyleSheet("background-color: " + const.color_smoothgray)
+        self.step1Dialog.setStyleSheet("QDialog { border:4px solid " + const.color_wgrBlue_hex + "  background-color: " + const.color_smoothgray + "}")
         self.step1Dialog.setLayout(self._buildStep1())
         self.step1Dialog.setWindowTitle('Emir No giriniz...')
-        # self.step1Dialog.setWindowFlag(Qt.FramelessWindowHint)
+        self.step1Dialog.setWindowFlag(Qt.FramelessWindowHint)
         self.step1Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
         self.step1Dialog.resize(const.piResolutionWidth, const.piResolutionHeight)
-        # self.step1Dialog.exec()
-        self.step1Dialog.showFullScreen()
+        self.step1Dialog.exec()
+        # self.step1Dialog.showFullScreen()
         centerWidget(self.step1Dialog)
         self.step1Dialog.setContentsMargins(0, 0, 0, 0)
 
@@ -220,17 +223,17 @@ class Production(QWidget):
 
     def _showDialogStep2(self):
 
-        self.focusedCQLineEdit = CQLineEdit()
+
 
         self.step2Dialog = QDialog()
-        self.step2Dialog.setStyleSheet("background-color: " + const.color_smoothgray)
+        self.step2Dialog.setStyleSheet("QDialog { border:4px solid " + const.color_wgrBlue_hex + "  background-color: " + const.color_smoothgray + "}")
         self.step2Dialog.setLayout(self._buildStep2())
         self.step2Dialog.setWindowTitle('Operatör ve Proses giriniz...')
-        # self.step2Dialog.setWindowFlag(Qt.FramelessWindowHint)
+        self.step2Dialog.setWindowFlag(Qt.FramelessWindowHint)
         self.step2Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
         self.step2Dialog.resize(const.piResolutionWidth, const.piResolutionHeight)
-        # self.step2Dialog.exec()
-        self.step1Dialog.showFullScreen()
+        self.step2Dialog.exec()
+        # self.step2Dialog.showFullScreen()
         centerWidget(self.step2Dialog)
 
     #endregion
@@ -262,6 +265,9 @@ class Production(QWidget):
 
         boxRoot.addWidget(widgetHeader)
 
+        gridInput = QGridLayout()
+        gridInput.setContentsMargins(5, 5, 5, 5)
+
         txtJobOrderNumber = CQLineEdit()
         txtJobOrderNumber.setContentsMargins(5, 5, 5, 0)
         txtJobOrderNumber.setStyleSheet("border-radius: 3px; background-color:white;")
@@ -269,10 +275,12 @@ class Production(QWidget):
         txtJobOrderNumber.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
         txtJobOrderNumber.setPlaceholderText('Ör: 19-123')
         txtJobOrderNumber.clicked.connect(lambda: self.focusedLE(txtJobOrderNumber))
-        boxRoot.addWidget(txtJobOrderNumber)
+        gridInput.addWidget(txtJobOrderNumber, 0, 0)
+        boxRoot.addLayout(gridInput)
         self.focusedLE(txtJobOrderNumber)
 
         gridNumpad = self._buildNumPad()
+        gridNumpad.setContentsMargins(5, 5, 5, 5)
 
         btnHyphen = WButton('-')
         btnHyphen.clicked.connect(self.btnClick_btnNumi)
@@ -305,7 +313,9 @@ class Production(QWidget):
     def _buildStep2(self):
 
         gridNumpad = self._buildNumPad()
+        gridNumpad.setContentsMargins(5, 5, 5, 5)
         gridInput = QGridLayout()
+        gridInput.setContentsMargins(5, 0, 5, 0)
         boxRoot = QVBoxLayout()
         boxRoot.setContentsMargins(0, 0, 0, 0)
 
@@ -352,6 +362,7 @@ class Production(QWidget):
         gridInput.addWidget(self.txtProcessCode, 0, 3, 1, 2)
 
         btnHyphen = WButton('-')
+        btnHyphen.setDisabled(True)
         btnHyphen.clicked.connect(self.btnClick_btnNumi)
         gridNumpad.addWidget(btnHyphen, 0, 3, 1, 1)
 
@@ -460,6 +471,7 @@ class Production(QWidget):
             self.btnDeleteOperator.setEnabled(True)
             self.valJobOrderNumber.setText(jobOrderNumber)
             self.btnClick_btnReject(self.step1Dialog)
+            self.step1Dialog.close()
             self._showDialogStep2()
 
     def btnClick_btnClose(self):
@@ -472,7 +484,7 @@ class Production(QWidget):
         self.close()
 
     def btnClick_btnReject(self, dialog):
-        dialog.reject()
+        dialog.close()
 
     def btnClick_btnNumi(self):
         btn = self.sender()
@@ -492,7 +504,7 @@ class Production(QWidget):
             self.startStopStatus = True
 
     def btnClick_btnAddOperator(self, operatorCode, processCode):
-        if len(operatorCode) == 4 or len(processCode) == 4:
+        if len(operatorCode) == 4 and len(processCode) == 4:
             objOperatorProcess = vmOperatorProcess(operatorCode, processCode)
             self.operatorProcessList.append(objOperatorProcess)
             if operatorCode not in self.operatorList:
@@ -555,6 +567,7 @@ class Production(QWidget):
 
     def txtChanged_txtOperatorCode(self):
         if len(self.txtOperatorCode.text()) == 4:
+            self.txtProcessCode.setFocus()
             self.focusedLE(self.txtProcessCode)
 
 

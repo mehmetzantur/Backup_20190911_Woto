@@ -124,7 +124,6 @@ class WButton(QPushButton):
         cssList.append("color: white;")
         cssList.append("}")
         css = "".join(cssList)
-        print(css)
         self.setStyleSheet(css)
 
 class WMenuButton(QToolButton):
@@ -152,7 +151,6 @@ class WMenuButton(QToolButton):
         cssList.append("color: white;")
         cssList.append("}")
         css = "".join(cssList)
-        print(css)
         self.setStyleSheet(css)
 
 

@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="028a427f-cf23-4cf8-87a8-48bef9d424e5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/controller/dbController.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller/dbController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/utilController.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller/utilController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/window/production.py" beforeDir="false" afterPath="$PROJECT_DIR$/window/production.py" afterDir="false" />
     </list>
@@ -13,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="242">
-      <file pinned="true" current-in-tab="false">
+      <file pinned="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controller/dbController.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="23" column="25" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
+            <state relative-caret-position="396">
+              <caret line="22" column="39" lean-forward="true" selection-start-line="22" selection-start-column="39" selection-end-line="22" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -25,7 +27,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
+            <state relative-caret-position="-270">
               <caret line="18" selection-start-line="18" selection-end-line="18" />
             </state>
           </provider>
@@ -52,30 +54,27 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller/utilController.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2520">
-              <caret line="166" column="47" selection-start-line="166" selection-start-column="47" selection-end-line="166" selection-end-column="47" />
+            <state relative-caret-position="1935">
+              <caret line="225" lean-forward="true" selection-start-line="225" selection-end-line="225" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
-                <element signature="e#855#1661#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/window/production.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="501">
-              <caret line="232" column="41" selection-start-line="232" selection-start-column="41" selection-end-line="232" selection-end-column="41" />
+            <state relative-caret-position="284">
+              <caret line="424" column="28" lean-forward="true" selection-start-line="424" selection-start-column="28" selection-end-line="424" selection-end-column="28" />
               <folding>
                 <element signature="e#11844#12053#0" />
-                <element signature="e#12010#13688#0" />
                 <element signature="e#12202#12408#0" />
                 <element signature="e#12289#12408#0" />
                 <element signature="e#12582#12686#0" />
                 <element signature="e#13090#13385#0" />
                 <element signature="e#13064#13101#0" />
-                <element signature="e#11175#11190#0" />
                 <element signature="e#11232#11334#0" />
                 <element signature="e#11375#11441#0" />
                 <element signature="e#14922#17130#0" />
@@ -145,9 +144,9 @@
       <find>valJobOrderNumber</find>
       <find>valRegion</find>
       <find>pro</find>
-      <find>DbController</find>
       <find>StrongFocus</find>
       <find>focusedLE</find>
+      <find>DbController</find>
     </findStrings>
     <replaceStrings>
       <replace>btnClick_btnCloseDialog</replace>
@@ -160,8 +159,8 @@
       <replace>WPushButton</replace>
       <replace>WNumButton</replace>
       <replace>(const.widgetHeaderHeight)</replace>
-      <replace>WMenuButton</replace>
       <replace>valStatus</replace>
+      <replace>WMenuButton</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -185,18 +184,18 @@
         <option value="$PROJECT_DIR$/model/workerProcess.py" />
         <option value="$PROJECT_DIR$/model/viewModel/vmOperatorProcess.py" />
         <option value="$PROJECT_DIR$/controller/workerController.py" />
-        <option value="$PROJECT_DIR$/controller/dbController.py" />
         <option value="$PROJECT_DIR$/controller/jobController.py" />
-        <option value="$PROJECT_DIR$/controller/utilController.py" />
         <option value="$PROJECT_DIR$/window/menu.py" />
         <option value="$PROJECT_DIR$/run.py" />
+        <option value="$PROJECT_DIR$/controller/utilController.py" />
         <option value="$PROJECT_DIR$/window/production.py" />
+        <option value="$PROJECT_DIR$/controller/dbController.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="-1910" />
+    <option name="y" value="-21" />
     <option name="width" value="1920" />
     <option name="height" value="1017" />
   </component>
@@ -405,7 +404,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-1928" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49875313" visible="true" weight="0.11064278" />
@@ -419,7 +418,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32936507" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.3281412" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49315068" visible="true" weight="0.23618636" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49315068" visible="true" weight="0.3125649" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5068493" side_tool="true" weight="0.2324263" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49841937" weight="0.32837301" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -623,13 +622,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller/dbController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="23" column="25" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controller/jobController.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -644,28 +636,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/run.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controller/workerController.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="383">
           <caret line="32" column="91" selection-start-line="32" selection-start-column="91" selection-end-line="32" selection-end-column="91" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controller/utilController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2520">
-          <caret line="166" column="47" selection-start-line="166" selection-start-column="47" selection-end-line="166" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-            <element signature="e#855#1661#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -676,19 +650,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/controller/utilController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1935">
+          <caret line="225" lean-forward="true" selection-start-line="225" selection-end-line="225" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/window/production.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="501">
-          <caret line="232" column="41" selection-start-line="232" selection-start-column="41" selection-end-line="232" selection-end-column="41" />
+        <state relative-caret-position="284">
+          <caret line="424" column="28" lean-forward="true" selection-start-line="424" selection-start-column="28" selection-end-line="424" selection-end-column="28" />
           <folding>
             <element signature="e#11844#12053#0" />
-            <element signature="e#12010#13688#0" />
             <element signature="e#12202#12408#0" />
             <element signature="e#12289#12408#0" />
             <element signature="e#12582#12686#0" />
             <element signature="e#13090#13385#0" />
             <element signature="e#13064#13101#0" />
-            <element signature="e#11175#11190#0" />
             <element signature="e#11232#11334#0" />
             <element signature="e#11375#11441#0" />
             <element signature="e#14922#17130#0" />
@@ -698,6 +680,20 @@
             <element signature="e#16506#17079#0" />
             <element signature="e#12071#12155#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-270">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/dbController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="22" column="39" lean-forward="true" selection-start-line="22" selection-start-column="39" selection-end-line="22" selection-end-column="39" />
         </state>
       </provider>
     </entry>
