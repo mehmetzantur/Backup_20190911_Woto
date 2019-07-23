@@ -208,10 +208,11 @@ class Production(QWidget):
         self.step1Dialog.setStyleSheet("background-color: " + const.color_smoothgray)
         self.step1Dialog.setLayout(self._buildStep1())
         self.step1Dialog.setWindowTitle('Emir No giriniz...')
-        self.step1Dialog.setWindowFlag(Qt.FramelessWindowHint)
+        # self.step1Dialog.setWindowFlag(Qt.FramelessWindowHint)
         self.step1Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
         self.step1Dialog.resize(const.piResolutionWidth, const.piResolutionHeight)
-        self.step1Dialog.exec()
+        # self.step1Dialog.exec()
+        self.step1Dialog.showFullScreen()
         centerWidget(self.step1Dialog)
         self.step1Dialog.setContentsMargins(0, 0, 0, 0)
 
@@ -225,10 +226,11 @@ class Production(QWidget):
         self.step2Dialog.setStyleSheet("background-color: " + const.color_smoothgray)
         self.step2Dialog.setLayout(self._buildStep2())
         self.step2Dialog.setWindowTitle('Operatör ve Proses giriniz...')
-        self.step2Dialog.setWindowFlag(Qt.FramelessWindowHint)
+        # self.step2Dialog.setWindowFlag(Qt.FramelessWindowHint)
         self.step2Dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
         self.step2Dialog.resize(const.piResolutionWidth, const.piResolutionHeight)
-        self.step2Dialog.exec()
+        # self.step2Dialog.exec()
+        self.step1Dialog.showFullScreen()
         centerWidget(self.step2Dialog)
 
     #endregion
