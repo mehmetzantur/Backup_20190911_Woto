@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="028a427f-cf23-4cf8-87a8-48bef9d424e5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/window/production.py" beforeDir="false" afterPath="$PROJECT_DIR$/window/production.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -63,9 +65,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/window/production.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="511">
-              <caret line="237" column="55" selection-start-line="237" selection-start-column="55" selection-end-line="237" selection-end-column="55" />
+            <state relative-caret-position="214">
+              <caret line="241" column="43" lean-forward="true" selection-start-line="241" selection-start-column="43" selection-end-line="241" selection-end-column="43" />
               <folding>
+                <element signature="e#2148#2162#0" />
+                <element signature="e#7091#9047#0" />
+                <element signature="e#9371#12160#0" />
+                <element signature="e#11623#13556#0" />
                 <element signature="e#11844#12053#0" />
                 <element signature="e#12202#12408#0" />
                 <element signature="e#12289#12408#0" />
@@ -114,9 +120,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ordernumber</find>
-      <find>createJob</find>
-      <find>Başla</find>
       <find>Layout</find>
       <find>deleteRow</find>
       <find>deleteOperatorProcess</find>
@@ -142,8 +145,11 @@
       <find>valRegion</find>
       <find>pro</find>
       <find>StrongFocus</find>
-      <find>focusedLE</find>
       <find>DbController</find>
+      <find>focusedLE</find>
+      <find>BAŞLA</find>
+      <find>ÇALIŞ</find>
+      <find>İŞLEM</find>
     </findStrings>
     <replaceStrings>
       <replace>btnClick_btnCloseDialog</replace>
@@ -156,8 +162,8 @@
       <replace>WPushButton</replace>
       <replace>WNumButton</replace>
       <replace>(const.widgetHeaderHeight)</replace>
-      <replace>valStatus</replace>
       <replace>WMenuButton</replace>
+      <replace>valStatus</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -190,9 +196,9 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1910" />
-    <option name="y" value="-21" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-227" />
+    <option name="y" value="-15" />
     <option name="width" value="1920" />
     <option name="height" value="1017" />
   </component>
@@ -401,7 +407,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49875313" visible="true" weight="0.11064278" />
@@ -415,7 +421,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32936507" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.3281412" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49315068" visible="true" weight="0.3125649" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49315068" visible="true" weight="0.3261105" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5068493" side_tool="true" weight="0.2324263" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49841937" weight="0.32837301" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -443,13 +449,6 @@
     </layout-to-restore>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/1652124980/PyQt5/QtCore/Qt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="1144" column="4" selection-start-line="1144" selection-start-column="4" selection-end-line="1144" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cc.py" />
     <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/1652124980/PyQt5/QtWidgets/QWidget.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -671,11 +670,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/1652124980/PyQt5/QtCore/Qt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="1144" column="4" selection-start-line="1144" selection-start-column="4" selection-end-line="1144" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/window/production.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="511">
-          <caret line="237" column="55" selection-start-line="237" selection-start-column="55" selection-end-line="237" selection-end-column="55" />
+        <state relative-caret-position="214">
+          <caret line="241" column="43" lean-forward="true" selection-start-line="241" selection-start-column="43" selection-end-line="241" selection-end-column="43" />
           <folding>
+            <element signature="e#2148#2162#0" />
+            <element signature="e#7091#9047#0" />
+            <element signature="e#9371#12160#0" />
+            <element signature="e#11623#13556#0" />
             <element signature="e#11844#12053#0" />
             <element signature="e#12202#12408#0" />
             <element signature="e#12289#12408#0" />
