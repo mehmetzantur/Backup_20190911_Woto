@@ -49,10 +49,9 @@ class MainWindow(QMainWindow):
     def generatePulse(self):
 
         GPIO.output(self.pin, GPIO.HIGH)
-        time.sleep(1)
-
+        # time.sleep(1)
         GPIO.output(self.pin, GPIO.LOW)
-        time.sleep(1)
+        # time.sleep(1)
         return
 
 def main():
