@@ -61,6 +61,7 @@ class Menu(QWidget):
         self.pulseThread = PulseThread()
         self.pulseThread.pulseSignal.connect(self.pulseControl)
         self.pulseThread.start()
+        print(str(self.pulseThread.isRunning))
 
 
 
