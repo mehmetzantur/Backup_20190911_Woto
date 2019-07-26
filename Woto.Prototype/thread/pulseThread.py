@@ -21,6 +21,7 @@ class PulseThread(QThread):
 
     def run(self):
         GPIO.cleanup()
+        GPIO.setmode(GPIO.BOARD)
         GPIO.setup(11, GPIO.IN)
         print('started...')
 
