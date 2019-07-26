@@ -29,11 +29,11 @@ class PulseThread(QThread):
             if GPIO.input(11) == True:
                 print('geldi')
                 self.pulseSignal.emit(1)
-                # while 1:
-                #     if GPIO.input(11) == True:
-                #         continue
-                #     else:
-                #         break
+                while 1:
+                    if GPIO.input(11) == True:
+                        continue
+                    else:
+                        break
 
 
 
