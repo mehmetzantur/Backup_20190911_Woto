@@ -2,6 +2,8 @@
 import os, sys, inspect
 import time
 
+
+
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
@@ -12,8 +14,7 @@ from PyQt5.QtGui import *
 
 from controller.utilController import UtilController as util, Constant as const, WMenuButton, WLed, WHeader
 from window.production import Production
-from thread.denemeThread import DenemeThread
-
+from thread.pulseThread import PulseThread
 
 
 # Gönderilen nesneyi ekranda ortalar.
@@ -32,11 +33,11 @@ class Menu(QWidget):
         print(str(val) + ' pulse geldi ')
 
     def threadControl(self):
-        print(str(self.dThread.currentThreadId()) + ' ö isRunning: ' + str(self.dThread.isRunning()))
-        print(str(self.dThread.currentThreadId()) +' ö isFinished: ' + str(self.dThread.isFinished()))
-        self.dThread.terminate()
-        print(str(self.dThread.currentThreadId()) +' s isRunning: ' + str(self.dThread.isRunning()))
-        print(str(self.dThread.currentThreadId()) +' s isFinished: ' + str(self.dThread.isFinished()))
+        print(str(self.pulseThread.currentThreadId()) + ' ö isRunning: ' + str(self.pulseThread.isRunning()))
+        print(str(self.pulseThread.currentThreadId()) +' ö isFinished: ' + str(self.pulseThread.isFinished()))
+        self.pulseThread.terminate()
+        print(str(self.pulseThread.currentThreadId()) +' s isRunning: ' + str(self.pulseThread.isRunning()))
+        print(str(self.pulseThread.currentThreadId()) +' s isFinished: ' + str(self.pulseThread.isFinished()))
 
     def _buildUI(self, Window):
 
@@ -57,9 +58,9 @@ class Menu(QWidget):
         # self.show()
         self.showFullScreen()
 
-        self.dThread = DenemeThread()
-        self.dThread.mySinyal.connect(self.pulseControl)
-        self.dThread.start()
+        self.pulseThread = PulseThread()
+        self.pulseThread.pulseSignal.connect(self.pulseControl)
+        self.pulseThread.start()
 
 
 
