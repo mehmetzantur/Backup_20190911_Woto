@@ -29,8 +29,10 @@ def centerWidget(widget):
 
 class Menu(QWidget):
 
+    i = 0
     def pulseControl(self, val):
-        print(str(val) + ' pulse geldi ')
+        print('pulse geldi val:' + str(self.i))
+        self.i = self.i + 1
 
     def threadControl(self):
         print(str(self.pulseThread.currentThreadId()) + ' ö isRunning: ' + str(self.pulseThread.isRunning()))
