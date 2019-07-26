@@ -12,6 +12,7 @@ class PulseThread(QThread):
     def __init__(self):
         super(PulseThread, self).__init__()
         # self.print_val = 0
+        self.setTerminationEnabled(True)
 
 
 
@@ -39,8 +40,8 @@ class PulseThread(QThread):
     def started(self):
         print('ThreadId: ' + str(self.currentThreadId()) + ' is started.')
 
-    def terminate(self):
-        super(PulseThread, self).terminate()
+    def stop(self):
+        self.terminate()
         print('ThreadId: ' + str(self.currentThreadId()) + ' is terminated.')
 
 
