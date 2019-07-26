@@ -14,7 +14,6 @@ from PyQt5.QtGui import *
 
 from controller.utilController import UtilController as util, Constant as const, WMenuButton, WLed, WHeader
 from window.production import Production
-from thread.pulseThread import PulseThread
 
 
 # Gönderilen nesneyi ekranda ortalar.
@@ -75,7 +74,6 @@ class Menu(QWidget):
         btnStartProduction.clicked.connect(self.showProductionWindow)
 
         btnMenu2 = WMenuButton('MENÜ2', const.menu_icon_star)
-        btnMenu2.clicked.connect(self.threadControl)
 
         btnMenu3 = WMenuButton('MENÜ3', const.menu_icon_star)
 

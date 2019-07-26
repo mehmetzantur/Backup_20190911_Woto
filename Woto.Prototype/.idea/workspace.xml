@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="028a427f-cf23-4cf8-87a8-48bef9d424e5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/window/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/window/menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/window/production.py" beforeDir="false" afterPath="$PROJECT_DIR$/window/production.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,11 +24,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/window/menu.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="32" column="31" lean-forward="true" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
+            <state relative-caret-position="202">
+              <caret line="76" selection-start-line="76" selection-end-line="76" />
               <folding>
                 <element signature="e#24#47#0" expanded="true" />
               </folding>
@@ -79,11 +78,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/thread/pulseThread.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="39" column="74" lean-forward="true" selection-start-line="39" selection-start-column="74" selection-end-line="39" selection-end-column="74" />
+            <state relative-caret-position="225">
+              <caret line="29" column="40" lean-forward="true" selection-start-line="29" selection-start-column="40" selection-end-line="29" selection-end-column="40" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -111,7 +110,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>_showDialogStep2</find>
       <find>piResolutionHeight</find>
       <find>fontSize20</find>
       <find>cons</find>
@@ -141,6 +139,7 @@
       <find>WMen</find>
       <find>print</find>
       <find>btnClose</find>
+      <find>thread</find>
     </findStrings>
     <replaceStrings>
       <replace>btnClick_btnCloseDialog</replace>
@@ -185,8 +184,8 @@
         <option value="$PROJECT_DIR$/thread/denemeThread.py" />
         <option value="$PROJECT_DIR$/thread/pulseThread.py" />
         <option value="$PROJECT_DIR$/pulse.py" />
-        <option value="$PROJECT_DIR$/window/menu.py" />
         <option value="$PROJECT_DIR$/window/production.py" />
+        <option value="$PROJECT_DIR$/window/menu.py" />
       </list>
     </option>
   </component>
@@ -610,16 +609,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/window/menu.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="32" column="31" lean-forward="true" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
-          <folding>
-            <element signature="e#24#47#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/window/production.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9432">
@@ -636,10 +625,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/thread/pulseThread.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="39" column="74" lean-forward="true" selection-start-line="39" selection-start-column="74" selection-end-line="39" selection-end-column="74" />
+        <state relative-caret-position="225">
+          <caret line="29" column="40" lean-forward="true" selection-start-line="29" selection-start-column="40" selection-end-line="29" selection-end-column="40" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/window/menu.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
+          <folding>
+            <element signature="e#24#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
