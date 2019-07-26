@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 import os, sys, inspect
+
+
+
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
@@ -8,7 +11,9 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from controller.utilController import UtilController as util, Constant as const, WButton, WLed, WFooter, WHeader
+from thread.pulseThread import PulseThread
+
+
 
 #region MODELS
 from model.job import Job
@@ -17,7 +22,7 @@ from model.viewModel.vmOperatorProcess import vmOperatorProcess
 #endregion
 
 #region CONTROLLERS
-from controller.utilController import UtilController as util
+from controller.utilController import UtilController as util, Constant as const, WButton, WLed, WFooter, WHeader
 from controller.workerController import WorkerController
 #endregion
 
@@ -54,7 +59,27 @@ class Production(QWidget):
 
 
 
+    thVal = 0
+    def pulseControl(self):
+        print('pulse geldi val:' + str(self.thVal))
+        self.thVal = self.thVal + 1
+        self.valCounter.setText(str(self.thVal) + ' / 0')
+
+    def threadControl(self):
+        print(str(self.pulseThread.currentThreadId()) + ' ö isRunning: ' + str(self.pulseThread.isRunning()))
+        print(str(self.pulseThread.currentThreadId()) +' ö isFinished: ' + str(self.pulseThread.isFinished()))
+        self.pulseThread.terminate()
+        print(str(self.pulseThread.currentThreadId()) +' s isRunning: ' + str(self.pulseThread.isRunning()))
+        print(str(self.pulseThread.currentThreadId()) +' s isFinished: ' + str(self.pulseThread.isFinished()))
+
+
+
     def _buildUI(self, Window):
+
+        self.pulseThread = PulseThread()
+        self.pulseThread.pulseSignal.connect(self.pulseControl)
+        self.pulseThread.start()
+        print(str(self.pulseThread.isRunning))
 
         self.focusedCQLineEdit = CQLineEdit()
 
@@ -108,6 +133,7 @@ class Production(QWidget):
         self.valCounter.setAlignment(Qt.AlignVCenter)
         self.valCounter.setAlignment(Qt.AlignHCenter)
         self.valCounter.setFont(const.font_fontSize20)
+        self.valCounter.setText(str(self.thVal) + ' / 0')
         boxStatusHeader.addWidget(self.valCounter)
 
         self.valStatus = QLabel('ÇALIŞMIYOR')
@@ -165,6 +191,11 @@ class Production(QWidget):
         self.btnStartStop.clicked.connect(self.btnClick_btnStartStop)
         self.btnStartStop.setFixedHeight(70)
         gridFooter.addWidget(self.btnStartStop, 1, 1)
+
+        self.btnCounterReset = WButton('SIFIRLA')
+        self.btnCounterReset.clicked.connect(self.btnClick_btnCounterReset)
+        self.btnCounterReset.setFixedHeight(70)
+        gridFooter.addWidget(self.btnCounterReset, 2, 1)
 
         gridAddDeleteOperator = QGridLayout()
 
@@ -492,6 +523,7 @@ class Production(QWidget):
         self.tableWorker.clear()
         print(str(len(self.operatorProcessList)))
         print(str(len(self.operatorList)))
+        self.threadControl()
         self.close()
 
     def btnClick_btnReject(self, dialog):
@@ -515,6 +547,10 @@ class Production(QWidget):
             self.valStatus.setText('ÇALIŞIYOR')
             self.widgetStatusHeader.setStyleSheet("color: white; background-color: " + const.color_success_hex)
             self.startStopStatus = True
+
+    def btnClick_btnCounterReset(self):
+        self.thVal = 0
+        self.valCounter.setText('0 / 0')
 
     def btnClick_btnAddOperator(self, operatorCode, processCode):
         if len(operatorCode) == 4 and len(processCode) == 4:

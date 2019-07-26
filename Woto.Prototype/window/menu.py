@@ -29,17 +29,6 @@ def centerWidget(widget):
 
 class Menu(QWidget):
 
-    i = 0
-    def pulseControl(self, val):
-        print('pulse geldi val:' + str(self.i))
-        self.i = self.i + 1
-
-    def threadControl(self):
-        print(str(self.pulseThread.currentThreadId()) + ' ö isRunning: ' + str(self.pulseThread.isRunning()))
-        print(str(self.pulseThread.currentThreadId()) +' ö isFinished: ' + str(self.pulseThread.isFinished()))
-        self.pulseThread.terminate()
-        print(str(self.pulseThread.currentThreadId()) +' s isRunning: ' + str(self.pulseThread.isRunning()))
-        print(str(self.pulseThread.currentThreadId()) +' s isFinished: ' + str(self.pulseThread.isFinished()))
 
     def _buildUI(self, Window):
 
@@ -60,10 +49,7 @@ class Menu(QWidget):
         # self.show()
         self.showFullScreen()
 
-        self.pulseThread = PulseThread()
-        self.pulseThread.pulseSignal.connect(self.pulseControl)
-        self.pulseThread.start()
-        print(str(self.pulseThread.isRunning))
+
 
 
 
