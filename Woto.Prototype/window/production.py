@@ -217,7 +217,7 @@ class Production(QWidget):
         gridFooter.addLayout(gridAddDeleteOperator, 1, 2)
 
         btnStance = WButton('DURUŞ')
-        btnStance.clicked.connect(self.btnClick_btnStance)
+        # btnStance.clicked.connect(self.btnClick_btnClose)
         btnStance.setFixedHeight(70)
         gridFooter.addWidget(btnStance, 2, 2)
 
@@ -454,10 +454,6 @@ class Production(QWidget):
 
     #region EVENTS
 
-    def btnClick_btnStance(self):
-        print(str(self.pulseThread.currentThreadId()) + ' qq isRunninggg: ' + str(self.pulseThread.isRunning()))
-        print(str(self.pulseThread.currentThreadId()) + ' qq isFinisheddd: ' + str(self.pulseThread.isFinished()))
-
     def deleteOperatorProcess(self):
 
 
@@ -531,7 +527,7 @@ class Production(QWidget):
         print(str(len(self.operatorProcessList)))
         print(str(len(self.operatorList)))
         self.threadControl()
-        # self.close()
+        self.close()
 
     def btnClick_btnReject(self, dialog):
         dialog.close()

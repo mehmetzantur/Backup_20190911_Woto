@@ -21,13 +21,12 @@ class PulseThread(QThread):
     def __del__(self):
         self.quit()
         self.wait()
-        print('__del__')
 
     def run(self):
         GPIO.cleanup()
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(11, GPIO.IN)
-        print('started...')
+        print('Pulse listening is started...')
 
         while 1:
             if self.stopFlag == False:
@@ -43,17 +42,5 @@ class PulseThread(QThread):
 
 
 
-        print('stopped...')
+        print('Pulse listening is stopped...')
 
-    def started(self):
-        print('ThreadId: ' + str(self.currentThreadId()) + ' is started.')
-
-
-
-
-    def finished(self):
-        print('ThreadId: ' + str(self.currentThreadId()) + ' is finished.')
-
-
-    def doProcess(self, val):
-        print(str(val))
