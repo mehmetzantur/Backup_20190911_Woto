@@ -13,12 +13,13 @@ class PulseThread(QThread):
         super(PulseThread, self).__init__()
         # self.print_val = 0
         self.setTerminationEnabled(True)
-        self.isStop = False
+        self.stopFlag = False
 
-
-
+    def stop(self):
+        self.stopFlag = True
 
     def __del__(self):
+        self.quit()
         self.wait()
 
     def run(self):
@@ -28,7 +29,7 @@ class PulseThread(QThread):
         print('started...')
 
         while 1:
-            if self.isStop == False:
+            if self.stopFlag == False:
                 if GPIO.input(11) == True:
                     self.pulseSignal.emit(1)
                     while 1:
@@ -40,18 +41,13 @@ class PulseThread(QThread):
                 break
 
 
-        self.terminate()
 
-
-
-
+        print('stopped...')
 
     def started(self):
         print('ThreadId: ' + str(self.currentThreadId()) + ' is started.')
 
-    def stop(self):
-        self.terminate()
-        print('ThreadId: ' + str(self.currentThreadId()) + ' is terminated.')
+
 
 
     def finished(self):
