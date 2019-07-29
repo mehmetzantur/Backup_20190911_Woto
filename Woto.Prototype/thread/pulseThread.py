@@ -39,8 +39,7 @@ class PulseThread(QThread):
             else:
                 break
 
-        print(str(self.currentThreadId()) +' MM isRunning: ' + str(self.isRunning()))
-        print(str(self.currentThreadId()) +' MM isFinished: ' + str(self.isFinished()))
+
         self.terminate()
 
 
