@@ -51,12 +51,21 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/window/production.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="71" column="42" lean-forward="true" selection-start-line="71" selection-start-column="42" selection-end-line="71" selection-end-column="42" />
+            <state relative-caret-position="368">
+              <caret line="523" column="35" lean-forward="true" selection-start-line="523" selection-start-column="35" selection-end-line="523" selection-end-column="35" />
               <folding>
+                <element signature="e#6103#6123#0" />
+                <element signature="e#6168#6815#0" />
+                <element signature="e#6862#7520#0" />
+                <element signature="e#7546#7561#0" />
+                <element signature="e#7599#9803#0" />
+                <element signature="e#9827#9841#0" />
+                <element signature="e#9879#13043#0" />
+                <element signature="e#13067#13080#0" />
+                <element signature="e#13118#13446#0" />
                 <element signature="e#13532#15661#0" />
                 <element signature="e#15724#16090#0" />
-                <element signature="e#16133#16375#0" />
+                <element signature="e#17816#20024#0" />
               </folding>
             </state>
           </provider>
@@ -115,7 +124,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>piResolutionHeight</find>
       <find>fontSize20</find>
       <find>cons</find>
       <find>cons.</find>
@@ -145,6 +153,7 @@
       <find>print</find>
       <find>thread</find>
       <find>btnClose</find>
+      <find>status</find>
     </findStrings>
     <replaceStrings>
       <replace>btnClick_btnCloseDialog</replace>
@@ -643,12 +652,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/window/production.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="71" column="42" lean-forward="true" selection-start-line="71" selection-start-column="42" selection-end-line="71" selection-end-column="42" />
+        <state relative-caret-position="368">
+          <caret line="523" column="35" lean-forward="true" selection-start-line="523" selection-start-column="35" selection-end-line="523" selection-end-column="35" />
           <folding>
+            <element signature="e#6103#6123#0" />
+            <element signature="e#6168#6815#0" />
+            <element signature="e#6862#7520#0" />
+            <element signature="e#7546#7561#0" />
+            <element signature="e#7599#9803#0" />
+            <element signature="e#9827#9841#0" />
+            <element signature="e#9879#13043#0" />
+            <element signature="e#13067#13080#0" />
+            <element signature="e#13118#13446#0" />
             <element signature="e#13532#15661#0" />
             <element signature="e#15724#16090#0" />
-            <element signature="e#16133#16375#0" />
+            <element signature="e#17816#20024#0" />
           </folding>
         </state>
       </provider>
