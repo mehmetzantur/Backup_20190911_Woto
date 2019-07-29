@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="028a427f-cf23-4cf8-87a8-48bef9d424e5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/thread/pulseThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/thread/pulseThread.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/window/production.py" beforeDir="false" afterPath="$PROJECT_DIR$/window/production.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -51,8 +51,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/window/production.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="59" lean-forward="true" selection-start-line="59" selection-end-line="59" />
+            <state relative-caret-position="389">
+              <caret line="71" column="42" lean-forward="true" selection-start-line="71" selection-start-column="42" selection-end-line="71" selection-end-column="42" />
+              <folding>
+                <element signature="e#13532#15661#0" />
+                <element signature="e#15724#16090#0" />
+                <element signature="e#16133#16375#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -184,8 +189,8 @@
         <option value="$PROJECT_DIR$/thread/denemeThread.py" />
         <option value="$PROJECT_DIR$/pulse.py" />
         <option value="$PROJECT_DIR$/window/menu.py" />
-        <option value="$PROJECT_DIR$/window/production.py" />
         <option value="$PROJECT_DIR$/thread/pulseThread.py" />
+        <option value="$PROJECT_DIR$/window/production.py" />
       </list>
     </option>
   </component>
@@ -638,8 +643,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/window/production.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="59" lean-forward="true" selection-start-line="59" selection-end-line="59" />
+        <state relative-caret-position="389">
+          <caret line="71" column="42" lean-forward="true" selection-start-line="71" selection-start-column="42" selection-end-line="71" selection-end-column="42" />
+          <folding>
+            <element signature="e#13532#15661#0" />
+            <element signature="e#15724#16090#0" />
+            <element signature="e#16133#16375#0" />
+          </folding>
         </state>
       </provider>
     </entry>

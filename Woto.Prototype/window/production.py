@@ -61,6 +61,8 @@ class Production(QWidget):
 
     thVal = 0
     def pulseControl(self):
+        if self.thVal == 0:
+            self.btnClick_btnStartStop()
         print('pulse geldi val:' + str(self.thVal))
         self.thVal = self.thVal + 1
         self.valCounter.setText(str(self.thVal) + ' / 0')
