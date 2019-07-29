@@ -135,6 +135,7 @@ class WMenuButton(QToolButton):
         self.setIcon((QIcon(QPixmap(icon))))
         self.setIconSize(QSize(50, 50))
         self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         cssList = []
         cssList.append("WMenuButton {")
         cssList.append("margin: 5px;")

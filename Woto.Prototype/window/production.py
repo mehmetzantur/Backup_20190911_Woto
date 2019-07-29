@@ -67,22 +67,12 @@ class Production(QWidget):
         self.thVal = self.thVal + 1
         self.valCounter.setText(str(self.thVal) + ' / 0')
 
-    def threadControl(self):
-        print(str(self.pulseThread.currentThreadId()) + ' ö isRunning: ' + str(self.pulseThread.isRunning()))
-        print(str(self.pulseThread.currentThreadId()) +' ö isFinished: ' + str(self.pulseThread.isFinished()))
-        self.pulseThread.stop()
-        print(str(self.pulseThread.currentThreadId()) + ' MM isRunninggg: ' + str(self.pulseThread.isRunning()))
-        print(str(self.pulseThread.currentThreadId()) + ' MM isFinisheddd: ' + str(self.pulseThread.isFinished()))
-
-
-
 
     def _buildUI(self, Window):
 
         self.pulseThread = PulseThread()
         self.pulseThread.pulseSignal.connect(self.pulseControl)
         self.pulseThread.start()
-        print(str(self.pulseThread.isRunning))
 
         self.focusedCQLineEdit = CQLineEdit()
 
@@ -465,49 +455,49 @@ class Production(QWidget):
 
             for column in range(self.tableWorker.columnCount()):
                 rowtext.append(self.tableWorker.item(row, column).text())
-            print('secilen satir: ' + str(rowtext))
+            # print('secilen satir: ' + str(rowtext))
 
         if len(rowtext) > 0:
 
-            print('--------------------deleteOperatorProcess baslangici--------------------')
+            # print('--------------------deleteOperatorProcess baslangici--------------------')
 
-            print('son durum operatorProcessList: ' + str(len(self.operatorProcessList)))
+            # print('son durum operatorProcessList: ' + str(len(self.operatorProcessList)))
 
             for item in self.operatorProcessList:
                 if item.operatorCode == rowtext[2] and item.processCode == rowtext[3]:
                     self.operatorProcessList.remove(item)
-                    print('silinen: ' + item.operatorCode + ' , ' + item.processCode)
+                    # print('silinen: ' + item.operatorCode + ' , ' + item.processCode)
 
-            print('güncel operatorProcessList: ' + str(len(self.operatorProcessList)))
+            # print('güncel operatorProcessList: ' + str(len(self.operatorProcessList)))
 
             operatorTempList = []
             for item in self.operatorProcessList:
                 if item.operatorCode not in operatorTempList:
                     operatorTempList.append(item.operatorCode)
 
-            print('operatorList: ' + str(self.operatorList))
-            print('aktarildi, operatorTempList: ' + str(operatorTempList))
+            # print('operatorList: ' + str(self.operatorList))
+            # print('aktarildi, operatorTempList: ' + str(operatorTempList))
 
-            print(str(self.operatorList) + ' == ' + str(operatorTempList))
+            # print(str(self.operatorList) + ' == ' + str(operatorTempList))
 
 
 
             if operatorTempList.count(rowtext[2]) == 0:
                 self.operatorList.remove(rowtext[2])
-                print('operatorList icindeki operator silindi')
+                # print('operatorList icindeki operator silindi')
                 #operatorTempList = self.operatorList
                 #print('operatorTempList içindeki operatör kodu silindi')
                 self.lastOperatorCount = self.lastOperatorCount - 1
 
-            print('güncel operatorList: ' + str(len(self.operatorList)))
-            print('güncel operatorProcessList: ' + str(len(self.operatorProcessList)))
+            # print('güncel operatorList: ' + str(len(self.operatorList)))
+            # print('güncel operatorProcessList: ' + str(len(self.operatorProcessList)))
 
             selectedRow = self.tableWorker.currentRow()
             self.tableWorker.removeRow(selectedRow)
 
             self.btnClick_btnSubmitOperators()
 
-            print('--------------------deleteOperatorProcess bitisi--------------------')
+            # print('--------------------deleteOperatorProcess bitisi--------------------')
 
     def btnClick_btnNextStep2(self, jobOrderNumber):
         if jobOrderNumber.strip() != "":
@@ -524,9 +514,9 @@ class Production(QWidget):
         self.operatorList = []
         self.lastOperatorCount = 0
         self.tableWorker.clear()
-        print(str(len(self.operatorProcessList)))
-        print(str(len(self.operatorList)))
-        self.threadControl()
+        # print(str(len(self.operatorProcessList)))
+        # print(str(len(self.operatorList)))
+        self.pulseThread.stop()
         self.close()
 
     def btnClick_btnReject(self, dialog):
@@ -567,16 +557,16 @@ class Production(QWidget):
 
     def btnClick_btnSubmitOperators(self):
 
-        print('-----submit----')
-        print(str(len(self.operatorProcessList)))
-        print(str(len(self.operatorList)))
-        print(str(self.lastOperatorCount))
+        # print('-----submit----')
+        # print(str(len(self.operatorProcessList)))
+        # print(str(len(self.operatorList)))
+        # print(str(self.lastOperatorCount))
 
         if len(self.operatorProcessList) != self.lastOperatorCount:
             if len(self.operatorList) > 0:
 
-                for item in self.operatorProcessList:
-                    print(item.operatorCode + ' - ' + item.processCode)
+                # for item in self.operatorProcessList:
+                    # print(item.operatorCode + ' - ' + item.processCode)
 
                 self.jobId = WorkerController().createWorker(self.valJobOrderNumber.text(), self.operatorList, self.operatorProcessList)
 
@@ -611,7 +601,7 @@ class Production(QWidget):
         self.btnClick_btnReject(self.step2Dialog)
 
     def focusedLE(self, txtObject):
-        print(txtObject)
+        # print(txtObject)
         self.focusedCQLineEdit = txtObject
 
     #endregion
