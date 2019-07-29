@@ -21,6 +21,7 @@ class PulseThread(QThread):
     def __del__(self):
         self.quit()
         self.wait()
+        print('__del__')
 
     def run(self):
         GPIO.cleanup()
