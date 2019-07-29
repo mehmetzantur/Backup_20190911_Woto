@@ -68,7 +68,7 @@ class Production(QWidget):
     def threadControl(self):
         print(str(self.pulseThread.currentThreadId()) + ' ö isRunning: ' + str(self.pulseThread.isRunning()))
         print(str(self.pulseThread.currentThreadId()) +' ö isFinished: ' + str(self.pulseThread.isFinished()))
-        self.pulseThread.stopFlag = True
+        self.pulseThread.stop()
         print(str(self.pulseThread.currentThreadId()) + ' MM isRunninggg: ' + str(self.pulseThread.isRunning()))
         print(str(self.pulseThread.currentThreadId()) + ' MM isFinisheddd: ' + str(self.pulseThread.isFinished()))
 
