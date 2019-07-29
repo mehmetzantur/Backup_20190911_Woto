@@ -141,7 +141,6 @@ class Menu(QWidget):
         self.productionWindow = QWidget()
         self.productionWindowUI = Production()
         self.productionWindowUI._buildUI(self.productionWindow)
-        self.close()
 
 
 

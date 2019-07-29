@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="028a427f-cf23-4cf8-87a8-48bef9d424e5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/thread/pulseThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/thread/pulseThread.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/window/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/window/menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/window/production.py" beforeDir="false" afterPath="$PROJECT_DIR$/window/production.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,11 +24,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/window/menu.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="154" column="10" lean-forward="true" selection-start-line="154" selection-start-column="10" selection-end-line="154" selection-end-column="10" />
+            <state relative-caret-position="519">
+              <caret line="156" lean-forward="true" selection-start-line="156" selection-end-line="156" />
               <folding>
                 <element signature="e#24#47#0" expanded="true" />
               </folding>
@@ -50,11 +48,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/window/production.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="482">
-              <caret line="452" column="14" lean-forward="true" selection-start-line="452" selection-start-column="14" selection-end-line="452" selection-end-column="14" />
+            <state relative-caret-position="410">
+              <caret line="545" column="64" lean-forward="true" selection-start-line="545" selection-start-column="64" selection-end-line="545" selection-end-column="64" />
               <folding>
                 <element signature="e#6103#6123#0" />
                 <element signature="e#6168#6815#0" />
@@ -632,10 +630,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/thread/pulseThread.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-9">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/window/menu.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="156" lean-forward="true" selection-start-line="156" selection-end-line="156" />
+          <folding>
+            <element signature="e#24#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/window/production.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="482">
-          <caret line="452" column="14" lean-forward="true" selection-start-line="452" selection-start-column="14" selection-end-line="452" selection-end-column="14" />
+        <state relative-caret-position="410">
+          <caret line="545" column="64" lean-forward="true" selection-start-line="545" selection-start-column="64" selection-end-line="545" selection-end-column="64" />
           <folding>
             <element signature="e#6103#6123#0" />
             <element signature="e#6168#6815#0" />
@@ -649,26 +667,6 @@
             <element signature="e#13532#15661#0" />
             <element signature="e#15724#16090#0" />
             <element signature="e#17816#20024#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/thread/pulseThread.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/window/menu.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="154" column="10" lean-forward="true" selection-start-line="154" selection-start-column="10" selection-end-line="154" selection-end-column="10" />
-          <folding>
-            <element signature="e#24#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
