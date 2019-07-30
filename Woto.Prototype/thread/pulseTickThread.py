@@ -31,13 +31,14 @@ class PulseTickThread(QThread):
 
     def run(self):
         print('tId: ' + str(self.currentThreadId()) + 'Writing started...')
-
+        print('address: ' + str(self.valAddress))
         while 1:
             if self.stopFlag == False:
                 self.pulseSignal.emit(1)
                 print('obj: ' + str(ctypes.cast(self.valAddress, ctypes.py_object).value))
-                myList = ctypes.cast(self.valAddress, ctypes.py_object)
+                myList = ctypes.cast(self.valAddress, ctypes.py_object).value
                 print('list: ' + myList)
+                print(str(myList[0]))
                 self.sleep(3)
             else:
                 break
