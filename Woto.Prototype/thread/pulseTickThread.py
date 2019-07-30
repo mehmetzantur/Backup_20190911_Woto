@@ -3,14 +3,14 @@ import RPi.GPIO as GPIO
 from PyQt5.QtCore import QThread, pyqtSignal
 
 
-class PulseThread(QThread):
+class PulseTickThread(QThread):
 
     pulseSignal = pyqtSignal(int)
 
 
 
     def __init__(self):
-        super(PulseThread, self).__init__()
+        super(PulseTickThread, self).__init__()
         # self.print_val = 0
         self.setTerminationEnabled(True)
         self.stopFlag = False

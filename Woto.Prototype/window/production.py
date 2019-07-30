@@ -11,7 +11,8 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from thread.pulseThread import PulseThread
+from thread.pulseTickThread import PulseTickThread
+from thread.pulseWriteThread import PulseWriteThread
 
 
 
@@ -24,6 +25,7 @@ from model.viewModel.vmOperatorProcess import vmOperatorProcess
 #region CONTROLLERS
 from controller.utilController import UtilController as util, Constant as const, WButton, WLed, WFooter, WHeader
 from controller.workerController import WorkerController
+
 #endregion
 
 
@@ -57,12 +59,18 @@ class Production(QWidget):
 
     startStopStatus = False
 
+    def pulseWrite(self):
+        self.pulseWriteThread = PulseWriteThread(self.jobId)
+        #self.pulseWriteThread.pulseSignal.connect(self.pulseTick)
+        self.pulseWriteThread.start()
+
 
 
     thVal = 0
-    def pulseControl(self):
+    def pulseTick(self):
         if self.thVal == 0:
             self.btnClick_btnStartStop()
+        self.pulseWrite()
         print('pulse geldi val:' + str(self.thVal))
         self.thVal = self.thVal + 1
         self.valCounter.setText(str(self.thVal) + ' / 0')
@@ -70,9 +78,9 @@ class Production(QWidget):
 
     def _buildUI(self, Window):
 
-        self.pulseThread = PulseThread()
-        self.pulseThread.pulseSignal.connect(self.pulseControl)
-        self.pulseThread.start()
+        self.PulseTickThread = PulseTickThread()
+        self.PulseTickThread.pulseSignal.connect(self.pulseTick)
+        self.PulseTickThread.start()
 
         self.focusedCQLineEdit = CQLineEdit()
 
