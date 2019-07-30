@@ -7,12 +7,13 @@ current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfra
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
+from collections import deque
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
+from thread.pulseReadThread import PulseReadThread
 from thread.pulseTickThread import PulseTickThread
-from thread.pulseWriteThread import PulseWriteThread
 
 
 
@@ -20,6 +21,7 @@ from thread.pulseWriteThread import PulseWriteThread
 from model.job import Job
 from model.workerProcess import WorkerProcess
 from model.viewModel.vmOperatorProcess import vmOperatorProcess
+from model.pulse import Pulse
 #endregion
 
 #region CONTROLLERS
@@ -58,20 +60,19 @@ def centerWidget(widget):
 class Production(QWidget):
 
     startStopStatus = False
+    pulseQueue = deque([1, 2, 3, 4])
 
-    def pulseWrite(self):
-        self.pulseWriteThread = PulseWriteThread(self.jobId)
-        #self.pulseWriteThread.pulseSignal.connect(self.pulseTick)
-        self.pulseWriteThread.start()
-        # self.pulseWriteThread.wait()
+    def pulseTick(self):
+
+        print('tick')
 
 
 
     thVal = 0
-    def pulseTick(self):
+    def pulseRead(self):
         if self.thVal == 0:
             self.btnClick_btnStartStop()
-        self.pulseWrite()
+        # self.pulseQueue.append(Pulse(self.jobId, util.getNow(), util.getUIID()))
         print('pulse geldi val:' + str(self.thVal))
         self.thVal = self.thVal + 1
         self.valCounter.setText(str(self.thVal) + ' / 0')
@@ -79,7 +80,11 @@ class Production(QWidget):
 
     def _buildUI(self, Window):
 
-        self.PulseTickThread = PulseTickThread()
+        self.PulseReadThread = PulseReadThread()
+        self.PulseReadThread.pulseSignal.connect(self.pulseRead)
+        self.PulseReadThread.start()
+
+        self.PulseTickThread = PulseTickThread(id(self.pulseQueue))
         self.PulseTickThread.pulseSignal.connect(self.pulseTick)
         self.PulseTickThread.start()
 

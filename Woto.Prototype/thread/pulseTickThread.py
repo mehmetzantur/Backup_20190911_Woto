@@ -1,6 +1,12 @@
-import time
-import RPi.GPIO as GPIO
+# -*- coding: utf-8 -*-
+import os, sys, inspect, ctypes
+
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
+
 from PyQt5.QtCore import QThread, pyqtSignal
+from controller.pulseController import PulseController
 
 
 class PulseTickThread(QThread):
@@ -9,11 +15,12 @@ class PulseTickThread(QThread):
 
 
 
-    def __init__(self):
+    def __init__(self, valAddress):
         super(PulseTickThread, self).__init__()
         # self.print_val = 0
         self.setTerminationEnabled(True)
         self.stopFlag = False
+        self.valAddress = valAddress
 
     def stop(self):
         self.stopFlag = True
@@ -23,24 +30,20 @@ class PulseTickThread(QThread):
         self.wait()
 
     def run(self):
-        GPIO.cleanup()
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(11, GPIO.IN)
-        print('Pulse listening is started...')
+        print('tId: ' + str(self.currentThreadId()) + 'Writing started...')
 
         while 1:
             if self.stopFlag == False:
-                if GPIO.input(11) == True:
-                    self.pulseSignal.emit(1)
-                    while 1:
-                        if GPIO.input(11) == True:
-                            continue
-                        else:
-                            break
+                self.pulseSignal.emit(1)
+                print('obj: ' + str(ctypes.cast(self.valAddress, ctypes.py_object).value))
+                myList = ctypes.cast(self.valAddress, ctypes.py_object)
+                print('list: ' + myList)
+                self.sleep(3)
             else:
                 break
 
+        # pulseController = PulseController()
+        # rowid = pulseController.createPulse(self.jobId)
 
-
-        print('Pulse listening is stopped...')
+        print('tId: ' + str(self.currentThreadId()) + 'Writing stopped... ' + str(rowid))
 
