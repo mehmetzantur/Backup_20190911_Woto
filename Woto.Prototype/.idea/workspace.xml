@@ -48,8 +48,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/window/production.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
-              <caret line="526" column="29" selection-start-line="526" selection-start-column="29" selection-end-line="526" selection-end-column="29" />
+            <state relative-caret-position="107">
+              <caret line="65" column="35" selection-start-line="65" selection-start-column="35" selection-end-line="65" selection-end-column="35" />
               <folding>
                 <element signature="e#1745#6094#0" />
                 <element signature="e#6103#6123#0" />
@@ -136,7 +136,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>cons</find>
       <find>cons.</find>
       <find>QPushButton</find>
       <find>WPushButton</find>
@@ -166,6 +165,7 @@
       <find>threadC</find>
       <find>WMen</find>
       <find>print</find>
+      <find>self.pulseThread</find>
     </findStrings>
     <replaceStrings>
       <replace>btnClick_btnCloseDialog</replace>
@@ -691,8 +691,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/window/production.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="526" column="29" selection-start-line="526" selection-start-column="29" selection-end-line="526" selection-end-column="29" />
+        <state relative-caret-position="107">
+          <caret line="65" column="35" selection-start-line="65" selection-start-column="35" selection-end-line="65" selection-end-column="35" />
           <folding>
             <element signature="e#1745#6094#0" />
             <element signature="e#6103#6123#0" />
