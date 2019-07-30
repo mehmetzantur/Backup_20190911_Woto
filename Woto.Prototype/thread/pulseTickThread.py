@@ -41,7 +41,7 @@ class PulseTickThread(QThread):
                     print(que.popleft())
                     queList = list(ctypes.cast(self.valAddress, ctypes.py_object).value)
                     print(queList)
-                self.sleep(3)
+                self.sleep(.5)
             else:
                 break
 
