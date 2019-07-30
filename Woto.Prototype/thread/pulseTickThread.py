@@ -39,8 +39,8 @@ class PulseTickThread(QThread):
                 if len(que) > 0:
                     self.pulseSignal.emit(1)
                     print(que.popleft())
-                    que = list(ctypes.cast(self.valAddress, ctypes.py_object).value)
-                    print(que)
+                    queList = list(ctypes.cast(self.valAddress, ctypes.py_object).value)
+                    print(queList)
                 self.sleep(3)
             else:
                 break
