@@ -38,7 +38,6 @@ class PulseTickThread(QThread):
             if self.stopFlag == False:
                 if len(que) > 0:
                     self.pulseSignal.emit(1)
-                    print(que.popleft())
                     pulseObj = que.popleft()
                     lastrowid = self.pulseController.createPulse(pulseObj.jobId)
                     print(lastrowid)
