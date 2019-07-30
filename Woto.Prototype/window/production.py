@@ -82,7 +82,6 @@ class Production(QWidget):
         self.PulseTickThread = PulseTickThread()
         self.PulseTickThread.pulseSignal.connect(self.pulseTick)
         self.PulseTickThread.start()
-        self.PulseTickThread.wait()
 
         self.focusedCQLineEdit = CQLineEdit()
 
