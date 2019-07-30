@@ -524,7 +524,7 @@ class Production(QWidget):
         self.tableWorker.clear()
         # print(str(len(self.operatorProcessList)))
         # print(str(len(self.operatorList)))
-        self.pulseThread.stop()
+        self.pulseTick.stop()
         self.close()
 
     def btnClick_btnReject(self, dialog):
