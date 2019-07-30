@@ -35,5 +35,5 @@ class PulseWriteThread(QThread):
         pulseController = PulseController()
         rowid = pulseController.createPulse(self.jobId)
 
-        print('tId: ' + str(self.currentThreadId()) + 'Writing stopped... ' + rowid)
+        print('tId: ' + str(self.currentThreadId()) + 'Writing stopped... ' + str(rowid))
 
