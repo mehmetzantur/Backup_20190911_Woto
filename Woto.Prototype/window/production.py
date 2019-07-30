@@ -72,7 +72,7 @@ class Production(QWidget):
     def pulseRead(self):
         if self.thVal == 0:
             self.btnClick_btnStartStop()
-        self.pulseQueue.append(Pulse(self.jobId, util.getNow(), util.getUIID()))
+        self.pulseQueue.append(Pulse(self.jobId, util().getNow(), util().getUIID()))
         print('pulse geldi val:' + str(self.thVal))
         self.thVal = self.thVal + 1
         self.valCounter.setText(str(self.thVal) + ' / 0')
