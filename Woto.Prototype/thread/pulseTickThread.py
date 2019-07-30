@@ -33,21 +33,14 @@ class PulseTickThread(QThread):
     def run(self):
         print('tId: ' + str(self.currentThreadId()) + 'Writing started...')
         print('address: ' + str(self.valAddress))
+        que = ctypes.cast(self.valAddress, ctypes.py_object).value
         while 1:
             if self.stopFlag == False:
-                self.pulseSignal.emit(1)
-                print('obj: ' + str(ctypes.cast(self.valAddress, ctypes.py_object).value))
-                myDequeue = ctypes.cast(self.valAddress, ctypes.py_object).value
-                myList = list(ctypes.cast(self.valAddress, ctypes.py_object).value)
-                print(myList)
-
-                print('pop basladi')
-                print(myDequeue.popleft())
-                print('pop bitti')
-
-                myNewList = list(ctypes.cast(self.valAddress, ctypes.py_object).value)
-
-                print(myNewList)
+                if que.count > 0:
+                    self.pulseSignal.emit(1)
+                    print(que.popleft())
+                    que = list(ctypes.cast(self.valAddress, ctypes.py_object).value)
+                    print(que)
                 self.sleep(3)
             else:
                 break

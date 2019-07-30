@@ -60,7 +60,7 @@ def centerWidget(widget):
 class Production(QWidget):
 
     startStopStatus = False
-    pulseQueue = deque([1, 2, 3, 4])
+    pulseQueue = deque()
 
     def pulseTick(self):
 
@@ -72,7 +72,7 @@ class Production(QWidget):
     def pulseRead(self):
         if self.thVal == 0:
             self.btnClick_btnStartStop()
-        # self.pulseQueue.append(Pulse(self.jobId, util.getNow(), util.getUIID()))
+        self.pulseQueue.append(Pulse(self.jobId, util.getNow(), util.getUIID()))
         print('pulse geldi val:' + str(self.thVal))
         self.thVal = self.thVal + 1
         self.valCounter.setText(str(self.thVal) + ' / 0')
@@ -530,6 +530,7 @@ class Production(QWidget):
         self.tableWorker.clear()
         # print(str(len(self.operatorProcessList)))
         # print(str(len(self.operatorList)))
+        self.PulseTickThread.stop()
         self.PulseTickThread.stop()
         self.close()
 
