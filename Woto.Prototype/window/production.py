@@ -63,7 +63,7 @@ class Production(QWidget):
         self.pulseWriteThread = PulseWriteThread(self.jobId)
         #self.pulseWriteThread.pulseSignal.connect(self.pulseTick)
         self.pulseWriteThread.start()
-        self.pulseWriteThread.wait()
+        # self.pulseWriteThread.wait()
 
 
 
