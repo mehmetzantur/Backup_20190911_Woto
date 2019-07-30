@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os, sys, inspect, ctypes
+from collections import deque
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
@@ -36,9 +37,17 @@ class PulseTickThread(QThread):
             if self.stopFlag == False:
                 self.pulseSignal.emit(1)
                 print('obj: ' + str(ctypes.cast(self.valAddress, ctypes.py_object).value))
+                myDequeue = ctypes.cast(self.valAddress, ctypes.py_object).value
                 myList = list(ctypes.cast(self.valAddress, ctypes.py_object).value)
                 print(myList)
-                print(str(myList[0]))
+
+                print('pop basladi')
+                print(myDequeue.popleft())
+                print('pop bitti')
+
+                myNewList = list(ctypes.cast(self.valAddress, ctypes.py_object).value)
+
+                print(myNewList)
                 self.sleep(3)
             else:
                 break
@@ -46,5 +55,5 @@ class PulseTickThread(QThread):
         # pulseController = PulseController()
         # rowid = pulseController.createPulse(self.jobId)
 
-        print('tId: ' + str(self.currentThreadId()) + 'Writing stopped... ' + str(rowid))
+        print('tId: ' + str(self.currentThreadId()) + 'Writing stopped... ')
 
