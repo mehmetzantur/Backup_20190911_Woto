@@ -13,7 +13,7 @@ from controller.pulseController import PulseController
 class PulseTickThread(QThread):
 
     pulseSignal = pyqtSignal(int)
-
+    pulseController = PulseController()
 
 
     def __init__(self, valAddress):
@@ -39,6 +39,9 @@ class PulseTickThread(QThread):
                 if len(que) > 0:
                     self.pulseSignal.emit(1)
                     print(que.popleft())
+                    pulseObj = que.popleft()
+                    lastrowid = self.pulseController.createPulse(pulseObj.jobId)
+                    print(lastrowid)
                     queList = list(ctypes.cast(self.valAddress, ctypes.py_object).value)
                     print(queList)
                 self.sleep(.5)
