@@ -8,6 +8,7 @@ sys.path.insert(0, parent_dir)
 
 from PyQt5.QtCore import QThread, pyqtSignal
 from controller.pulseController import PulseController
+from controller.utilController import UtilController
 
 
 class PulseTickThread(QThread):
@@ -33,7 +34,7 @@ class PulseTickThread(QThread):
     def run(self):
         print('tId: ' + str(self.currentThreadId()) + 'Writing started...')
         print('address: ' + str(self.valAddress))
-        que = ctypes.cast(self.valAddress, ctypes.py_object).value
+        que = UtilController().getObjectFromMemory(self.valAddress)
         while 1:
             if self.stopFlag == False:
                 if len(que) > 0:
@@ -41,7 +42,7 @@ class PulseTickThread(QThread):
                     pulseObj = que.popleft()
                     lastrowid = self.pulseController.createPulse(pulseObj.jobId)
                     print(lastrowid)
-                    queList = list(ctypes.cast(self.valAddress, ctypes.py_object).value)
+                    queList = list(UtilController().getObjectFromMemory(self.valAddress))
                     print(queList)
                 self.sleep(.5)
             else:

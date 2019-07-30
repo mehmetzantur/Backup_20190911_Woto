@@ -1,4 +1,4 @@
-import datetime, uuid
+import datetime, uuid, ctypes
 
 from PyQt5.QtCore import Qt, QSize, QRect
 from PyQt5.QtGui import QFont, QIcon, QPixmap, QRegion
@@ -9,7 +9,8 @@ class UtilController:
 
 
 
-
+    def getObjectFromMemory(self, address):
+        return ctypes.cast(address, ctypes.py_object).value
 
 
     def getNow(self):
