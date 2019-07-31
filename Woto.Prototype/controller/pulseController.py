@@ -12,7 +12,7 @@ class PulseController:
     def createPulse(self, jobId):
         conn = DbController().getConnection()
         cmd = conn.cursor()
-        cmd.execute("INSERT INTO Pulse (JobId, CreatedTime, Guid) VALUES (?, ?, ?)", (jobId, util().getNow(), util().getUIID(),))
+        cmd.execute("INSERT INTO Pulse (JobId, IsSended, CreatedTime, Guid) VALUES (?, ?, ?, ?)", (jobId, False, util().getNow(), util().getUIID(),))
         conn.commit()
         conn.close()
         return cmd.lastrowid
