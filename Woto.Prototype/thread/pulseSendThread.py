@@ -17,7 +17,7 @@ class PulseSendThread(QThread):
     pulseController = PulseController()
 
 
-    def __init__(self, valAddress):
+    def __init__(self):
         super(PulseSendThread, self).__init__()
         # self.print_val = 0
         self.setTerminationEnabled(True)
