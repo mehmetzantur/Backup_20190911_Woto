@@ -11,14 +11,14 @@ from controller.pulseController import PulseController
 from controller.utilController import UtilController
 
 
-class PulseTickThread(QThread):
+class PulseWriteThread(QThread):
 
     pulseSignal = pyqtSignal(int)
     pulseController = PulseController()
 
 
     def __init__(self, valAddress):
-        super(PulseTickThread, self).__init__()
+        super(PulseWriteThread, self).__init__()
         # self.print_val = 0
         self.setTerminationEnabled(True)
         self.stopFlag = False

@@ -13,7 +13,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
 from thread.pulseReadThread import PulseReadThread
-from thread.pulseTickThread import PulseTickThread
+from thread.pulseWriteThread import PulseWriteThread
+from thread.pulseSendThread import PulseSendThread
 
 
 
@@ -84,9 +85,12 @@ class Production(QWidget):
         self.PulseReadThread.pulseSignal.connect(self.pulseRead)
         self.PulseReadThread.start()
 
-        self.PulseTickThread = PulseTickThread(id(self.pulseQueue))
-        self.PulseTickThread.pulseSignal.connect(self.pulseTick)
-        self.PulseTickThread.start()
+        self.PulseWriteThread = PulseWriteThread(id(self.pulseQueue))
+        self.PulseWriteThread.pulseSignal.connect(self.pulseTick)
+        self.PulseWriteThread.start()
+
+        self.PulseSendThread = PulseSendThread()
+        self.PulseSendThread.start()
 
         self.focusedCQLineEdit = CQLineEdit()
 
@@ -530,8 +534,9 @@ class Production(QWidget):
         self.tableWorker.clear()
         # print(str(len(self.operatorProcessList)))
         # print(str(len(self.operatorList)))
-        self.PulseTickThread.stop()
-        self.PulseTickThread.stop()
+        self.PulseWriteThread.stop()
+        self.PulseWriteThread.stop()
+        self.PulseSendThread.stop()
         self.close()
 
     def btnClick_btnReject(self, dialog):
