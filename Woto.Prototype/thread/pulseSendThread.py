@@ -36,6 +36,7 @@ class PulseSendThread(QThread):
         while 1:
             if self.stopFlag == False:
                 self.sendSignal.emit(1)
+
                 print('sended...')
                 self.sleep(3)
             else:

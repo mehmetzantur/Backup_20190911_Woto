@@ -63,9 +63,9 @@ class Production(QWidget):
     startStopStatus = False
     pulseQueue = deque()
 
-    def pulseTick(self):
+    def pulseWrite(self):
 
-        print('tick')
+        print('write')
 
 
 
@@ -86,7 +86,7 @@ class Production(QWidget):
         self.PulseReadThread.start()
 
         self.PulseWriteThread = PulseWriteThread(id(self.pulseQueue))
-        self.PulseWriteThread.pulseSignal.connect(self.pulseTick)
+        self.PulseWriteThread.pulseSignal.connect(self.pulseWrite)
         self.PulseWriteThread.start()
 
         self.PulseSendThread = PulseSendThread()
