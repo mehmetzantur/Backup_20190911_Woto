@@ -37,7 +37,7 @@ class IntegrationController:
                     print('Update yaparken hata oluştu!')
                     return False
 
-                print('Güncelleme başarılı.')
+                print('Update successful.')
                 return True
 
     def updateSendedPulse(self, id):
