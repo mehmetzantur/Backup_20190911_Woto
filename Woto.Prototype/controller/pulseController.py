@@ -10,6 +10,7 @@ from controller.utilController import UtilController as util, Constant as const
 class PulseController:
 
     def createPulse(self, jobId):
+        print('joooobbbbb:::: ' + str(jobId))
         conn = DbController().getConnection()
         cmd = conn.cursor()
         cmd.execute("INSERT INTO Pulse (JobId, IsSended, CreatedTime, Guid) VALUES (?, ?, ?, ?)", (jobId, False, util().getNow(), util().getUIID(),))
