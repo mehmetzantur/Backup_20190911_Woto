@@ -22,26 +22,25 @@ class IntegrationController:
     def sendWaitingPulse(self):
 
         pulseList = self.getWaitingToSendPulseList()
-        print('pulseler: ' + str(pulseList))
-        # if len(pulseList) > 0:
-        #     jsonPulseList = util().serializeListToJson(pulseList)
-        #     result = requests.post(self.serviceUrl + "AddPulse", data=jsonPulseList, headers=self.headers)
-        #     print('post oldu')
-        # if result.status_code == 200:
-        #     print('Sending to service is successful.')
-        #
-        #     updateStatus = []
-        #     for item in result.json():
-        #         itemPulse = Pulse(**item)
-        #         updateStatus.append(self.updateSendedPulse(itemPulse.id))
-        #         sleep(.5)
-        #
-        #     if False in updateStatus:
-        #         print('Update yaparken hata oluştu!')
-        #         return False
-        #
-        #     print('Güncelleme başarılı.')
-        #     return True
+        if len(pulseList) > 0:
+            jsonPulseList = util().serializeListToJson(pulseList)
+            result = requests.post(self.serviceUrl + "AddPulse", data=jsonPulseList, headers=self.headers)
+            print('post oldu')
+        if result.status_code == 200:
+            print('Sending to service is successful.')
+
+            updateStatus = []
+            for item in result.json():
+                itemPulse = Pulse(**item)
+                updateStatus.append(self.updateSendedPulse(itemPulse.id))
+                sleep(.5)
+
+            if False in updateStatus:
+                print('Update yaparken hata oluştu!')
+                return False
+
+            print('Güncelleme başarılı.')
+            return True
 
     def updateSendedPulse(self, id):
 
