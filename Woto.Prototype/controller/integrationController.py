@@ -22,7 +22,7 @@ class IntegrationController:
     def sendWaitingPulse(self):
 
         jsonPulseList = util().serializeListToJson(self.getWaitingToSendPulseList())
-        result = requests.post(self.serviceUrlLocal + "AddPulse", data=jsonPulseList, headers=self.headers)
+        result = requests.post(self.serviceUrl + "AddPulse", data=jsonPulseList, headers=self.headers)
         if result.status_code == 200:
             print('Sending to service is successful.')
 
