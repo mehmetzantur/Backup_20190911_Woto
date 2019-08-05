@@ -33,24 +33,20 @@ class PulseWriteThread(QThread):
 
     def run(self):
         print('tId: ' + str(self.currentThreadId()) + 'Writing started...')
-        print('address: ' + str(self.valAddress))
         que = UtilController().getObjectFromMemory(self.valAddress)
         while 1:
             if self.stopFlag == False:
                 if len(que) > 0:
                     self.pulseSignal.emit(1)
                     pulseObj = que.popleft()
-                    print('write içindeki: ' + str(pulseObj.jobId))
                     lastrowid = self.pulseController.createPulse(pulseObj.jobId)
                     print(lastrowid)
                     queList = list(UtilController().getObjectFromMemory(self.valAddress))
                     print(queList)
-                self.sleep(.5)
+                self.sleep(.3)
             else:
                 break
 
-        # pulseController = PulseController()
-        # rowid = pulseController.createPulse(self.jobId)
 
         print('tId: ' + str(self.currentThreadId()) + 'Writing stopped... ')
 

@@ -37,12 +37,9 @@ class PulseSendThread(QThread):
             if self.stopFlag == False:
                 self.sendSignal.emit(1)
                 IntegrationController().sendWaitingPulse()
-                self.sleep(.5)
+                self.sleep(.3)
             else:
                 break
-
-        # pulseController = PulseController()
-        # rowid = pulseController.createPulse(self.jobId)
 
         print('tId: ' + str(self.currentThreadId()) + 'Sending stopped... ')
 

@@ -62,20 +62,13 @@ class Production(QWidget):
 
     startStopStatus = False
     pulseQueue = deque()
-
-    def pulseWrite(self):
-        print('gitti')
-
-
-
-
     thVal = 0
+
     def pulseRead(self):
         if self.thVal == 0:
             self.btnClick_btnStartStop()
             self.PulseSendThread.start()
         self.pulseQueue.append(Pulse(None, self.jobId, util().getNow(), util().getUIID()))
-        print('pulse geldi val:' + str(self.thVal))
         self.thVal = self.thVal + 1
         self.valCounter.setText(str(self.thVal) + ' / 0')
 
@@ -87,7 +80,7 @@ class Production(QWidget):
         self.PulseReadThread.start()
 
         self.PulseWriteThread = PulseWriteThread(id(self.pulseQueue))
-        self.PulseWriteThread.pulseSignal.connect(self.pulseWrite)
+        # self.PulseWriteThread.pulseSignal.connect(self.pulseWrite)
         self.PulseWriteThread.start()
 
         self.PulseSendThread = PulseSendThread()

@@ -25,8 +25,6 @@ class IntegrationController:
         if len(pulseList) > 0:
             jsonPulseList = util().serializeListToJson(pulseList)
             result = requests.post(self.serviceUrl + "AddPulse", data=jsonPulseList, headers=self.headers)
-            print('post oldu: ' + str(result.status_code))
-            # print(str(jsonPulseList))
             if result.status_code == 200:
                 print('Sending to service is successful.')
 
@@ -34,7 +32,6 @@ class IntegrationController:
                 for item in result.json():
                     itemPulse = Pulse(**item)
                     updateStatus.append(self.updateSendedPulse(itemPulse.id))
-                    sleep(.5)
 
                 if False in updateStatus:
                     print('Update yaparken hata oluştu!')
