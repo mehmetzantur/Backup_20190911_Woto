@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-import os, sys, inspect
+import os, sys, inspect, requests, json
+from time import sleep
+
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
@@ -7,26 +9,57 @@ sys.path.insert(0, parent_dir)
 from controller.dbController import DbController
 from controller.utilController import UtilController as util, Constant as const
 
+from model.pulse import Pulse
+
 class IntegrationController:
+    serviceUrl = "http://websrv:85/Woto.WebService/api/integration/"
+    serviceUrlLocal = "http://localhost:5588/api/integration/"
 
+    headers = {'Content-type': 'application/json'}
 
-    def sendPulse(self, jobId):
-        conn = DbController().getConnection()
-        cmd = conn.cursor()
-        # cmd.execute("INSERT INTO Pulse (JobId, IsSended, CreatedTime, Guid) VALUES (?, ?, ?, ?)", (jobId, False, util().getNow(), util().getUIID(),))
-        # self.conn.commit()
-        conn.close()
-        # return cmd.lastrowid
+    conn = DbController().getConnection()
 
+    def sendWaitingPulse(self):
+
+        jsonPulseList = util().serializeListToJson(self.getWaitingToSendPulseList())
+        result = requests.post(self.serviceUrlLocal + "AddPulse", data=jsonPulseList, headers=self.headers)
+        if result.status_code == 200:
+            print('Sending to service is successful.')
+
+            updateStatus = []
+            for item in result.json():
+                itemPulse = Pulse(**item)
+                updateStatus.append(self.updateSendedPulse(itemPulse.id))
+                sleep(.5)
+
+            if False in updateStatus:
+                print('Update yaparken hata oluştu!')
+                return False
+
+            print('Güncelleme başarılı.')
+            return True
+
+    def updateSendedPulse(self, id):
+
+        try:
+            conn = DbController().getConnection()
+            cmd = conn.cursor()
+            cmd.execute("UPDATE Pulse SET IsSended = 1 WHERE Id = ?", (id,))
+            conn.commit()
+        except:
+            return False
+        finally:
+            conn.close()
+
+        return True
 
     def getWaitingToSendPulseList(self):
-        conn = DbController().getConnection()
+        cmd = self.conn.cursor()
+        query_getWaitingToSendPulseList = "SELECT * FROM Pulse WHERE IsSended = 0"
+        cmd.execute(query_getWaitingToSendPulseList)
+        pulseList = []
+        for item in cmd.fetchall():
+            pulseItem = Pulse(item[0], item[1], item[2], item[3], item[4])
+            pulseList.append(pulseItem)
 
-        cur = conn.cursor()
-
-        cur.execute("SELECT * FROM Pulse")
-
-        print(cur.fetchall())
-
-
-
+        return pulseList

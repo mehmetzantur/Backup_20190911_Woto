@@ -8,7 +8,7 @@ sys.path.insert(0, parent_dir)
 
 from PyQt5.QtCore import QThread, pyqtSignal
 from controller.pulseController import PulseController
-from controller.utilController import UtilController
+from controller.integrationController import IntegrationController
 
 
 class PulseSendThread(QThread):
@@ -31,13 +31,12 @@ class PulseSendThread(QThread):
         self.wait()
 
     def run(self):
-        print('tId: ' + str(self.currentThreadId()) + 'Send started...')
+        print('tId: ' + str(self.currentThreadId()) + 'Sending started...')
 
         while 1:
             if self.stopFlag == False:
                 self.sendSignal.emit(1)
-
-                print('sended...')
+                IntegrationController().sendWaitingPulse()
                 self.sleep(3)
             else:
                 break
@@ -45,5 +44,5 @@ class PulseSendThread(QThread):
         # pulseController = PulseController()
         # rowid = pulseController.createPulse(self.jobId)
 
-        print('tId: ' + str(self.currentThreadId()) + 'Send stopped... ')
+        print('tId: ' + str(self.currentThreadId()) + 'Sending stopped... ')
 
