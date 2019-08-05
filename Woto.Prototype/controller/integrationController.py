@@ -17,16 +17,16 @@ class IntegrationController:
 
     headers = {'Content-type': 'application/json'}
 
-    conn = DbController().getConnection()
+
 
     def sendWaitingPulse(self):
 
         pulseList = self.getWaitingToSendPulseList()
         print('pulseler: ' + str(pulseList))
-        if len(pulseList) > 0:
-            jsonPulseList = util().serializeListToJson(self.getWaitingToSendPulseList())
-            result = requests.post(self.serviceUrl + "AddPulse", data=jsonPulseList, headers=self.headers)
-            print('post oldu')
+        # if len(pulseList) > 0:
+        #     jsonPulseList = util().serializeListToJson(pulseList)
+        #     result = requests.post(self.serviceUrl + "AddPulse", data=jsonPulseList, headers=self.headers)
+        #     print('post oldu')
         # if result.status_code == 200:
         #     print('Sending to service is successful.')
         #
@@ -58,7 +58,8 @@ class IntegrationController:
         return True
 
     def getWaitingToSendPulseList(self):
-        cmd = self.conn.cursor()
+        conn = DbController().getConnection()
+        cmd = conn.cursor()
         query_getWaitingToSendPulseList = "SELECT * FROM Pulse WHERE IsSended = 0"
         cmd.execute(query_getWaitingToSendPulseList)
         pulseList = []
