@@ -64,8 +64,8 @@ class Production(QWidget):
     pulseQueue = deque()
 
     def pulseWrite(self):
-
-        IntegrationController().sendWaitingPulse()
+        print('gitti')
+        # IntegrationController().sendWaitingPulse()
 
 
 
