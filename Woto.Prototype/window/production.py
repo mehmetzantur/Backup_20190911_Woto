@@ -75,7 +75,7 @@ class Production(QWidget):
             self.btnClick_btnStartStop()
             self.PulseSendThread.start()
         self.pulseQueue.append(Pulse(self.jobId, util().getNow(), util().getUIID()))
-        print('pulse geldi val:' + str(self.thVal))
+        print('pulse geldi val:' + str(self.thVal) + 'jobIDIDIDID: ' + str(self.jobId))
         self.thVal = self.thVal + 1
         self.valCounter.setText(str(self.thVal) + ' / 0')
 
