@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os, sys, inspect
 
-
+from controller.integrationController import IntegrationController
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
@@ -65,7 +65,7 @@ class Production(QWidget):
 
     def pulseWrite(self):
 
-        print('write')
+        IntegrationController().sendWaitingPulse()
 
 
 
