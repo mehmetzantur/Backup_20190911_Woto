@@ -36,7 +36,7 @@ class PulseSendThread(QThread):
         while 1:
             if self.stopFlag == False:
                 self.sendSignal.emit(1)
-                
+                # IntegrationController().sendWaitingPulse()
                 self.sleep(3)
             else:
                 break

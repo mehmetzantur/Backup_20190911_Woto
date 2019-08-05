@@ -65,7 +65,7 @@ class Production(QWidget):
 
     def pulseWrite(self):
         print('gitti')
-        # IntegrationController().sendWaitingPulse()
+
 
 
 
