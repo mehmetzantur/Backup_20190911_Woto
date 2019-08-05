@@ -43,7 +43,7 @@ class PulseWriteThread(QThread):
                     print(lastrowid)
                     queList = list(UtilController().getObjectFromMemory(self.valAddress))
                     print(queList)
-                self.sleep(.3)
+                self.sleep(2)
             else:
                 break
 
