@@ -48,7 +48,7 @@ class PulseReadThread(QThread):
                         if GPIO.input(11) == 0 and counterx == 0:
                             counterx = 1
                             break
-                    time.sleep(0.1)
+                time.sleep(0.1)
             else:
                 break
 
