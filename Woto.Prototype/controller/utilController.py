@@ -1,4 +1,4 @@
-import datetime, uuid
+import datetime, uuid, ctypes, json
 
 from PyQt5.QtCore import Qt, QSize, QRect
 from PyQt5.QtGui import QFont, QIcon, QPixmap, QRegion
@@ -8,8 +8,14 @@ from PyQt5.QtWidgets import QPushButton, QSizePolicy, QToolButton, QWidget, QLab
 class UtilController:
 
 
+    def serializeToJson(self, obj):
+        return json.dumps(obj.__dict__)
 
+    def serializeListToJson(self, objList):
+        return json.dumps([ob.__dict__ for ob in objList])
 
+    def getObjectFromMemory(self, address):
+        return ctypes.cast(address, ctypes.py_object).value
 
 
     def getNow(self):
@@ -134,6 +140,7 @@ class WMenuButton(QToolButton):
         self.setFont(Constant().font_fontSize15)
         self.setIcon((QIcon(QPixmap(icon))))
         self.setIconSize(QSize(50, 50))
+        self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         cssList = []
         cssList.append("WMenuButton {")

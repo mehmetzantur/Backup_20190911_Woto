@@ -1,24 +1,34 @@
 # -*- coding: utf-8 -*-
 import os, sys, inspect
+
+from controller.integrationController import IntegrationController
+
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
+from collections import deque
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from controller.utilController import UtilController as util, Constant as const, WButton, WLed, WFooter, WHeader
+from thread.pulseReadThread import PulseReadThread
+from thread.pulseWriteThread import PulseWriteThread
+from thread.pulseSendThread import PulseSendThread
+
+
 
 #region MODELS
 from model.job import Job
 from model.workerProcess import WorkerProcess
 from model.viewModel.vmOperatorProcess import vmOperatorProcess
+from model.pulse import Pulse
 #endregion
 
 #region CONTROLLERS
-from controller.utilController import UtilController as util
+from controller.utilController import UtilController as util, Constant as const, WButton, WLed, WFooter, WHeader
 from controller.workerController import WorkerController
+
 #endregion
 
 
@@ -51,10 +61,30 @@ def centerWidget(widget):
 class Production(QWidget):
 
     startStopStatus = False
+    pulseQueue = deque()
+    thVal = 0
 
+    def pulseRead(self):
+        if self.thVal == 0:
+            self.btnClick_btnStartStop()
+            self.PulseSendThread.start()
+        self.pulseQueue.append(Pulse(None, self.jobId, util().getNow(), util().getUIID()))
+        self.thVal = self.thVal + 1
+        self.valCounter.setText(str(self.thVal) + ' / 0')
 
 
     def _buildUI(self, Window):
+
+        self.PulseReadThread = PulseReadThread()
+        self.PulseReadThread.pulseSignal.connect(self.pulseRead)
+        self.PulseReadThread.start()
+
+        self.PulseWriteThread = PulseWriteThread(id(self.pulseQueue))
+        # self.PulseWriteThread.pulseSignal.connect(self.pulseWrite)
+        self.PulseWriteThread.start()
+
+        self.PulseSendThread = PulseSendThread()
+
 
         self.focusedCQLineEdit = CQLineEdit()
 
@@ -108,6 +138,7 @@ class Production(QWidget):
         self.valCounter.setAlignment(Qt.AlignVCenter)
         self.valCounter.setAlignment(Qt.AlignHCenter)
         self.valCounter.setFont(const.font_fontSize20)
+        self.valCounter.setText(str(self.thVal) + ' / 0')
         boxStatusHeader.addWidget(self.valCounter)
 
         self.valStatus = QLabel('ÇALIŞMIYOR')
@@ -165,6 +196,11 @@ class Production(QWidget):
         self.btnStartStop.clicked.connect(self.btnClick_btnStartStop)
         self.btnStartStop.setFixedHeight(70)
         gridFooter.addWidget(self.btnStartStop, 1, 1)
+
+        self.btnCounterReset = WButton('SIFIRLA')
+        self.btnCounterReset.clicked.connect(self.btnClick_btnCounterReset)
+        self.btnCounterReset.setFixedHeight(70)
+        gridFooter.addWidget(self.btnCounterReset, 2, 1)
 
         gridAddDeleteOperator = QGridLayout()
 
@@ -431,49 +467,49 @@ class Production(QWidget):
 
             for column in range(self.tableWorker.columnCount()):
                 rowtext.append(self.tableWorker.item(row, column).text())
-            print('secilen satir: ' + str(rowtext))
+            # print('secilen satir: ' + str(rowtext))
 
         if len(rowtext) > 0:
 
-            print('--------------------deleteOperatorProcess baslangici--------------------')
+            # print('--------------------deleteOperatorProcess baslangici--------------------')
 
-            print('son durum operatorProcessList: ' + str(len(self.operatorProcessList)))
+            # print('son durum operatorProcessList: ' + str(len(self.operatorProcessList)))
 
             for item in self.operatorProcessList:
                 if item.operatorCode == rowtext[2] and item.processCode == rowtext[3]:
                     self.operatorProcessList.remove(item)
-                    print('silinen: ' + item.operatorCode + ' , ' + item.processCode)
+                    # print('silinen: ' + item.operatorCode + ' , ' + item.processCode)
 
-            print('güncel operatorProcessList: ' + str(len(self.operatorProcessList)))
+            # print('güncel operatorProcessList: ' + str(len(self.operatorProcessList)))
 
             operatorTempList = []
             for item in self.operatorProcessList:
                 if item.operatorCode not in operatorTempList:
                     operatorTempList.append(item.operatorCode)
 
-            print('operatorList: ' + str(self.operatorList))
-            print('aktarildi, operatorTempList: ' + str(operatorTempList))
+            # print('operatorList: ' + str(self.operatorList))
+            # print('aktarildi, operatorTempList: ' + str(operatorTempList))
 
-            print(str(self.operatorList) + ' == ' + str(operatorTempList))
+            # print(str(self.operatorList) + ' == ' + str(operatorTempList))
 
 
 
             if operatorTempList.count(rowtext[2]) == 0:
                 self.operatorList.remove(rowtext[2])
-                print('operatorList icindeki operator silindi')
+                # print('operatorList icindeki operator silindi')
                 #operatorTempList = self.operatorList
                 #print('operatorTempList içindeki operatör kodu silindi')
                 self.lastOperatorCount = self.lastOperatorCount - 1
 
-            print('güncel operatorList: ' + str(len(self.operatorList)))
-            print('güncel operatorProcessList: ' + str(len(self.operatorProcessList)))
+            # print('güncel operatorList: ' + str(len(self.operatorList)))
+            # print('güncel operatorProcessList: ' + str(len(self.operatorProcessList)))
 
             selectedRow = self.tableWorker.currentRow()
             self.tableWorker.removeRow(selectedRow)
 
             self.btnClick_btnSubmitOperators()
 
-            print('--------------------deleteOperatorProcess bitisi--------------------')
+            # print('--------------------deleteOperatorProcess bitisi--------------------')
 
     def btnClick_btnNextStep2(self, jobOrderNumber):
         if jobOrderNumber.strip() != "":
@@ -490,8 +526,11 @@ class Production(QWidget):
         self.operatorList = []
         self.lastOperatorCount = 0
         self.tableWorker.clear()
-        print(str(len(self.operatorProcessList)))
-        print(str(len(self.operatorList)))
+        # print(str(len(self.operatorProcessList)))
+        # print(str(len(self.operatorList)))
+        self.PulseWriteThread.stop()
+        self.PulseWriteThread.stop()
+        self.PulseSendThread.stop()
         self.close()
 
     def btnClick_btnReject(self, dialog):
@@ -516,6 +555,10 @@ class Production(QWidget):
             self.widgetStatusHeader.setStyleSheet("color: white; background-color: " + const.color_success_hex)
             self.startStopStatus = True
 
+    def btnClick_btnCounterReset(self):
+        self.thVal = 0
+        self.valCounter.setText('0 / 0')
+
     def btnClick_btnAddOperator(self, operatorCode, processCode):
         if len(operatorCode) == 4 and len(processCode) == 4:
             objOperatorProcess = vmOperatorProcess(operatorCode, processCode)
@@ -528,16 +571,16 @@ class Production(QWidget):
 
     def btnClick_btnSubmitOperators(self):
 
-        print('-----submit----')
-        print(str(len(self.operatorProcessList)))
-        print(str(len(self.operatorList)))
-        print(str(self.lastOperatorCount))
+        # print('-----submit----')
+        # print(str(len(self.operatorProcessList)))
+        # print(str(len(self.operatorList)))
+        # print(str(self.lastOperatorCount))
 
         if len(self.operatorProcessList) != self.lastOperatorCount:
             if len(self.operatorList) > 0:
 
-                for item in self.operatorProcessList:
-                    print(item.operatorCode + ' - ' + item.processCode)
+                # for item in self.operatorProcessList:
+                    # print(item.operatorCode + ' - ' + item.processCode)
 
                 self.jobId = WorkerController().createWorker(self.valJobOrderNumber.text(), self.operatorList, self.operatorProcessList)
 
@@ -572,7 +615,7 @@ class Production(QWidget):
         self.btnClick_btnReject(self.step2Dialog)
 
     def focusedLE(self, txtObject):
-        print(txtObject)
+        # print(txtObject)
         self.focusedCQLineEdit = txtObject
 
     #endregion

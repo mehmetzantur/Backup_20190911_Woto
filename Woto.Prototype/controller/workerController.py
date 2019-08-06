@@ -17,8 +17,8 @@ class WorkerController:
 
 
     def createWorker(self, jobOrderNumber, operatorList, operatorProcessList):
-        print('--------createWorker bas----')
-        print(str(operatorList))
+        # print('--------createWorker bas----')
+        # print(str(operatorList))
         if len(operatorList) > 0:
             conn = DbController().getConnection()
             cmd = conn.cursor()
@@ -34,11 +34,11 @@ class WorkerController:
             conn.commit()
             conn.close()
         return jobId
-        print('--------createWorker bit----')
+        # print('--------createWorker bit----')
 
 
     def getWorkersForJobOrderNumber(self, jobId):
-        print('-----getWorkersForJobOrderNumber-----' + str(jobId))
+        # print('-----getWorkersForJobOrderNumber-----' + str(jobId))
         conn = DbController().getConnection()
         cmd = conn.cursor()
         query_getWorkers = "SELECT wp.Id, j.Id, wp.OperatorId, wp.ProcessId, wp.CreatedTime FROM WorkerProcess wp " \

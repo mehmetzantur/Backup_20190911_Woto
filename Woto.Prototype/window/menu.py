@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 import os, sys, inspect
+import time
+
+
+
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
@@ -10,8 +14,6 @@ from PyQt5.QtGui import *
 
 from controller.utilController import UtilController as util, Constant as const, WMenuButton, WLed, WHeader
 from window.production import Production
-
-
 
 
 # Gönderilen nesneyi ekranda ortalar.
@@ -45,6 +47,12 @@ class Menu(QWidget):
 
         # self.show()
         self.showFullScreen()
+
+
+
+
+
+
 
 
     def _buildMain(self):
