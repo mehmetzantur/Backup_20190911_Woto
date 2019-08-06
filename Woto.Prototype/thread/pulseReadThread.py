@@ -34,6 +34,7 @@ class PulseReadThread(QThread):
         while 1:
             if self.stopFlag == False:
                 if GPIO.input(11) == 1 and counterx == 1:
+                    self.pulseSignal.emit(1)
                     counterx = 0
                     counter = counter + 1
                     print('pulse ' + str(counter))
@@ -50,8 +51,6 @@ class PulseReadThread(QThread):
                     time.sleep(0.1)
             else:
                 break
-
-
 
         print('Pulse listening is stopped...')
 
