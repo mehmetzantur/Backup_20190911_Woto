@@ -53,6 +53,5 @@ class PulseReadThread(QThread):
             else:
                 break
 
-
         print('Pulse listening is stopped...')
 
