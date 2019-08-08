@@ -47,6 +47,6 @@ class PulseWriteThread(QThread):
             else:
                 break
 
-
+        # deneme
         print('tId: ' + str(self.currentThreadId()) + 'Writing stopped... ')
 
