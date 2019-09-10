@@ -88,7 +88,7 @@ class IntegrationController:
             jobItem = Job(item[0], item[1], item[2], item[3], item[4], item[5])
             jobList.append(jobItem)
 
-        print(jobList[0].id)
+        # print(jobList[0].id)
         return jobList
 
     #endregion
