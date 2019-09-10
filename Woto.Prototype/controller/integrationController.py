@@ -46,7 +46,6 @@ class IntegrationController:
         jobList = self.getWaitingToSendJobList()
         if len(jobList) > 0:
             jsonJobList = util().serializeListToJson(jobList)
-            print(jsonJobList)
             result = requests.post(self.serviceUrl + "AddJob", data=jsonJobList, headers=self.headers)
             if result.status_code == 200:
                 print('Job 200')
@@ -102,6 +101,7 @@ class IntegrationController:
         if len(workerList) > 0:
             jsonWorkerList = util().serializeListToJson(workerList)
             result = requests.post(self.serviceUrl + "AddWorker", data = jsonWorkerList, headers = self.headers)
+            print(jsonWorkerList)
             if result.status_code == 200:
                 print('Worker 200')
 
@@ -155,6 +155,7 @@ class IntegrationController:
 
         if len(workerProcessList) > 0:
             jsonWorkerProcessList = util().serializeListToJson(workerProcessList)
+            print(jsonWorkerProcessList)
             result = requests.post(self.serviceUrl + "AddWorkerProcess", data = jsonWorkerProcessList, headers = self.headers)
             if result.status_code == 200:
                 print('WorkerProcess 200')
