@@ -94,8 +94,6 @@ class IntegrationController:
     #endregion
 
 
-
-
     # region WORKER SEND OPERATIONS
 
     def sendWaitingWorker(self):
@@ -148,13 +146,14 @@ class IntegrationController:
     # endregion
 
 
-
-
     # region WORKERProcess SEND OPERATIONS
 
     def sendWaitingWorkerProcess(self):
 
         workerProcessList = self.getWaitingToSendWorkerProcessList()
+
+        print(workerProcessList)
+        
         if len(workerProcessList) > 0:
             jsonWorkerProcessList = util().serializeListToJson(workerProcessList)
             result = requests.post(self.serviceUrl + "AddWorkerProcess", data = jsonWorkerProcessList, headers = self.headers)
@@ -200,8 +199,6 @@ class IntegrationController:
         return workerProcessList
 
     # endregion
-
-
 
 
     #region PULSE SEND OPERATIONS
