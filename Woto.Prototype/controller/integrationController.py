@@ -168,7 +168,6 @@ class IntegrationController:
                 if False in updateStatus:
                     print('WorkerProcess Update yaparken hata oluştu!')
                     return 0
-
                 
                 return 1
 
