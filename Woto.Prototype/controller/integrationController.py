@@ -71,7 +71,7 @@ class IntegrationController:
             cmd = conn.cursor()
             cmd.execute("UPDATE Job SET IsSended = 1 WHERE Id = ?", (id,))
             conn.commit()
-            print('Job table updated.')
+            # print('Job table updated.')
         except:
             return False
         finally:
@@ -155,9 +155,7 @@ class IntegrationController:
 
         if len(workerProcessList) > 0:
             jsonWorkerProcessList = util().serializeListToJson(workerProcessList)
-            print(jsonWorkerProcessList)
             result = requests.post(self.serviceUrl + "AddWorkerProcess", data = jsonWorkerProcessList, headers = self.headers)
-            print('result:' + str(result.json()))
             if result.status_code == 200:
                 print('WorkerProcess 200')
 
@@ -180,7 +178,7 @@ class IntegrationController:
             cmd = conn.cursor()
             cmd.execute("UPDATE WorkerProcess SET IsSended = 1 WHERE Id = ?", (id,))
             conn.commit()
-            print('WorkerProcess table updated.')
+            # print('WorkerProcess table updated.')
         except:
             return False
         finally:
@@ -212,7 +210,7 @@ class IntegrationController:
             jsonPulseList = util().serializeListToJson(pulseList)
             result = requests.post(self.serviceUrl + "AddPulse", data=jsonPulseList, headers=self.headers)
             if result.status_code == 200:
-                print('Sending to service is successful.')
+                print('Pulse 200')
 
                 updateStatus = []
                 for item in result.json():
@@ -223,7 +221,6 @@ class IntegrationController:
                     print('Update yaparken hata oluştu!')
                     return 0
 
-                print('Update successful.')
                 return 1
 
     def updateSendedPulse(self, id):
@@ -233,6 +230,7 @@ class IntegrationController:
             cmd = conn.cursor()
             cmd.execute("UPDATE Pulse SET IsSended = 1 WHERE Id = ?", (id,))
             conn.commit()
+            # print('Update successful.')
         except:
             return False
         finally:
