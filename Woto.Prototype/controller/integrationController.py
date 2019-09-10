@@ -46,6 +46,7 @@ class IntegrationController:
         jobList = self.getWaitingToSendJobList()
         if len(jobList) > 0:
             jsonJobList = util().serializeListToJson(jobList)
+            print(jsonJobList)
             result = requests.post(self.serviceUrl + "AddJob", data=jsonJobList, headers=self.headers)
             if result.status_code == 200:
                 print('Job 200')
