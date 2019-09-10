@@ -29,7 +29,7 @@ class IntegrationController:
 
         self.sendWaitingJob()
         self.sendWaitingWorker()
-        # self.sendWaitingWorkerProcess()
+        self.sendWaitingWorkerProcess()
         self.sendWaitingPulse()
 
         # if isSendStatus == 4:
@@ -42,26 +42,26 @@ class IntegrationController:
     #region JOB SEND OPERATIONS
 
     def sendWaitingJob(self):
-        print('send waiting job started')
+        print('Waiting')
         jobList = self.getWaitingToSendJobList()
         if len(jobList) > 0:
             jsonJobList = util().serializeListToJson(jobList)
             result = requests.post(self.serviceUrl + "AddJob", data=jsonJobList, headers=self.headers)
             print('servis sonucu: ' + str(result.status_code))
             if result.status_code == 200:
-                print('Job sending to service is successful.')
+                print('Job 200')
 
                 updateStatus = []
                 for item in result.json():
                     itemJob = Job(**item)
-                    print('update id si: ' + str(itemJob.id))
+                    print('Updated id: ' + str(itemJob.id))
                     updateStatus.append(self.updateSendedJob(itemJob.id))
 
                 if False in updateStatus:
                     print('Job Update yaparken hata oluştu!')
                     return 0
 
-                print('Job Update successful.')
+                
                 return 1
 
     def updateSendedJob(self, id):
@@ -71,6 +71,7 @@ class IntegrationController:
             cmd = conn.cursor()
             cmd.execute("UPDATE Job SET IsSended = 1 WHERE Id = ?", (id,))
             conn.commit()
+            print('Job table updated.')
         except:
             return False
         finally:
@@ -88,7 +89,6 @@ class IntegrationController:
             jobItem = Job(item[0], item[1], item[2], item[3], item[4], item[5])
             jobList.append(jobItem)
 
-        # print(jobList[0].id)
         return jobList
 
     #endregion
@@ -103,7 +103,7 @@ class IntegrationController:
             jsonWorkerList = util().serializeListToJson(workerList)
             result = requests.post(self.serviceUrl + "AddWorker", data = jsonWorkerList, headers = self.headers)
             if result.status_code == 200:
-                print('Worker Sending to service is successful.')
+                print('Worker 200')
 
                 updateStatus = []
                 for item in result.json():
@@ -114,7 +114,7 @@ class IntegrationController:
                     print('Worker Update yaparken hata oluştu!')
                     return 0
 
-                print('Worker Update successful.')
+                
                 return 1
 
     def updateSendedWorker(self, id):
@@ -124,6 +124,7 @@ class IntegrationController:
             cmd = conn.cursor()
             cmd.execute("UPDATE Worker SET IsSended = 1 WHERE Id = ?", (id,))
             conn.commit()
+            print('Worker table updated.')
         except:
             return False
         finally:
@@ -152,15 +153,13 @@ class IntegrationController:
 
         workerProcessList = self.getWaitingToSendWorkerProcessList()
 
-       
-        
         if len(workerProcessList) > 0:
             jsonWorkerProcessList = util().serializeListToJson(workerProcessList)
             print(jsonWorkerProcessList)
             result = requests.post(self.serviceUrl + "AddWorkerProcess", data = jsonWorkerProcessList, headers = self.headers)
             print('result:' + str(result.json()))
             if result.status_code == 200:
-                print('WorkerProcess Sending to service is successful.')
+                print('WorkerProcess 200')
 
                 updateStatus = []
                 for item in result.json():
@@ -171,7 +170,7 @@ class IntegrationController:
                     print('WorkerProcess Update yaparken hata oluştu!')
                     return 0
 
-                print('WorkerProcess Update successful.')
+                
                 return 1
 
     def updateSendedWorkerProcess(self, id):
@@ -181,6 +180,7 @@ class IntegrationController:
             cmd = conn.cursor()
             cmd.execute("UPDATE WorkerProcess SET IsSended = 1 WHERE Id = ?", (id,))
             conn.commit()
+            print('WorkerProcess table updated.')
         except:
             return False
         finally:
