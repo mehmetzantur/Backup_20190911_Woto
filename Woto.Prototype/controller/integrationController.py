@@ -124,7 +124,7 @@ class IntegrationController:
             cmd = conn.cursor()
             cmd.execute("UPDATE Worker SET IsSended = 1 WHERE Id = ?", (id,))
             conn.commit()
-            print('Worker table updated.')
+            # print('Worker table updated.')
         except:
             return False
         finally:
