@@ -152,11 +152,13 @@ class IntegrationController:
 
         workerProcessList = self.getWaitingToSendWorkerProcessList()
 
-        print(workerProcessList)
+       
         
         if len(workerProcessList) > 0:
             jsonWorkerProcessList = util().serializeListToJson(workerProcessList)
+            print(jsonWorkerProcessList)
             result = requests.post(self.serviceUrl + "AddWorkerProcess", data = jsonWorkerProcessList, headers = self.headers)
+            print('result:' + result.json())
             if result.status_code == 200:
                 print('WorkerProcess Sending to service is successful.')
 
