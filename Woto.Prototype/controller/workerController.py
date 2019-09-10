@@ -24,13 +24,13 @@ class WorkerController:
             cmd = conn.cursor()
             jobId = JobController().createJob(jobOrderNumber)
             for operatorId in operatorList:
-                query_Worker = "INSERT INTO Worker (JobId, OperatorId, CreatedTime, Guid) VALUES (?, ?, ?, ?)"
-                cmd.execute(query_Worker, (jobId, operatorId, util().getNow(), util().getUIID(),))
+                query_Worker = "INSERT INTO Worker (JobId, OperatorId, IsSended, CreatedTime, Guid) VALUES (?, ?, ?, ?, ?)"
+                cmd.execute(query_Worker, (jobId, operatorId, False, util().getNow(), util().getUIID(),))
                 workerId = cmd.lastrowid
                 for obj in operatorProcessList:
                     if operatorId == obj.operatorCode:
-                        query_WorkerProcess = "INSERT INTO WorkerProcess (WorkerId, OperatorId, ProcessId, CreatedTime, Guid) VALUES (?, ?, ?, ?, ?)"
-                        cmd.execute(query_WorkerProcess, (workerId, obj.operatorCode, obj.processCode, util().getNow(), util().getUIID(),))
+                        query_WorkerProcess = "INSERT INTO WorkerProcess (WorkerId, OperatorId, ProcessId, IsSended, CreatedTime, Guid) VALUES (?, ?, ?, ?, ?, ?)"
+                        cmd.execute(query_WorkerProcess, (workerId, obj.operatorCode, obj.processCode, False, util().getNow(), util().getUIID(),))
             conn.commit()
             conn.close()
         return jobId

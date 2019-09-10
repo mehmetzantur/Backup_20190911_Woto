@@ -15,6 +15,7 @@ from PyQt5.QtGui import *
 from thread.pulseReadThread import PulseReadThread
 from thread.pulseWriteThread import PulseWriteThread
 from thread.pulseSendThread import PulseSendThread
+from thread.integrationSendThread import IntegrationSendThread
 
 
 
@@ -67,7 +68,8 @@ class Production(QWidget):
     def pulseRead(self):
         if self.thVal == 0:
             self.btnClick_btnStartStop()
-            self.PulseSendThread.start()
+            # self.PulseSendThread.start()
+            self.IntegrationSendThread.start()
         self.pulseQueue.append(Pulse(None, self.jobId, util().getNow(), util().getUIID()))
         self.thVal = self.thVal + 1
         self.valCounter.setText(str(self.thVal) + ' / 0')
@@ -83,7 +85,8 @@ class Production(QWidget):
         # self.PulseWriteThread.pulseSignal.connect(self.pulseWrite)
         self.PulseWriteThread.start()
 
-        self.PulseSendThread = PulseSendThread()
+        # self.PulseSendThread = PulseSendThread()
+        self.IntegrationSendThread = IntegrationSendThread()
 
 
         self.focusedCQLineEdit = CQLineEdit()

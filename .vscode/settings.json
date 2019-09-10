@@ -1,3 +1,7 @@
 {
-    "python.pythonPath": "C:\\dev\\Python\\python.exe"
+    "python.pythonPath": "C:\\dev\\Python\\python.exe",
+    "python.linting.pylintArgs": [
+        "--extension-pkg-whitelist=PyQt5",
+        "--errors-only"
+    ]
 }
