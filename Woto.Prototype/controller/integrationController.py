@@ -29,8 +29,8 @@ class IntegrationController:
 
         self.sendWaitingJob()
         self.sendWaitingWorker()
-        # self.sendWaitingWorkerProcess()
-        # self.sendWaitingPulse()
+        self.sendWaitingWorkerProcess()
+        self.sendWaitingPulse()
 
         # if isSendStatus == 4:
         #     return True
