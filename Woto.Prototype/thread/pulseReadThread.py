@@ -28,13 +28,13 @@ class PulseReadThread(QThread):
         GPIO.cleanup()
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(11, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-
+        pin11 = GPIO.input(11)
         print('Pulse listening is started...')
 
         while 1:
             if self.stopFlag == False:
                 # if GPIO.input(11) == 1 and counterx == 1:
-                if counterx == 1:
+                if pin11 == 1:
                     # self.pulseSignal.emit(1)
                     # counterx = 0
                     # counter = counter + 1
