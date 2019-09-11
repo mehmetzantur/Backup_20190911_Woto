@@ -24,13 +24,14 @@ class WorkerController:
             cmd = conn.cursor()
             jobId = JobController().createJob(jobOrderNumber)
             for operatorId in operatorList:
-                query_Worker = "INSERT INTO Worker (JobId, OperatorId, IsSended, CreatedTime, Guid) VALUES (?, ?, ?, ?, ?)"
-                cmd.execute(query_Worker, (jobId, operatorId, False, util().getNow(), util().getUIID(),))
-                workerId = cmd.lastrowid
+                id = util().getUIID8()
+                query_Worker = "INSERT INTO Worker (Id, JobId, OperatorId, IsSended, CreatedTime, Guid) VALUES (?, ?, ?, ?, ?, ?)"
+                cmd.execute(query_Worker, (id, jobId, operatorId, False, util().getNow(), util().getUIID(),))
+                workerId = id
                 for obj in operatorProcessList:
                     if operatorId == obj.operatorCode:
-                        query_WorkerProcess = "INSERT INTO WorkerProcess (WorkerId, OperatorId, ProcessId, IsSended, CreatedTime, Guid) VALUES (?, ?, ?, ?, ?, ?)"
-                        cmd.execute(query_WorkerProcess, (workerId, obj.operatorCode, obj.processCode, False, util().getNow(), util().getUIID(),))
+                        query_WorkerProcess = "INSERT INTO WorkerProcess (Id, WorkerId, OperatorId, ProcessId, IsSended, CreatedTime, Guid) VALUES (?, ?, ?, ?, ?, ?, ?)"
+                        cmd.execute(query_WorkerProcess, (util().getUIID8(), workerId, obj.operatorCode, obj.processCode, False, util().getNow(), util().getUIID(),))
             conn.commit()
             conn.close()
         return jobId

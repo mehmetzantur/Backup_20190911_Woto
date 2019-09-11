@@ -1,4 +1,4 @@
-import datetime, uuid, ctypes, json
+import datetime, uuid, ctypes, json, shortuuid
 
 from PyQt5.QtCore import Qt, QSize, QRect
 from PyQt5.QtGui import QFont, QIcon, QPixmap, QRegion
@@ -23,6 +23,9 @@ class UtilController:
 
     def getUIID(self):
         return str(uuid.uuid4())
+
+    def getUIID8(self):
+        return shortuuid.ShortUUID().random(length=8)
 
 
 class Constant:
@@ -229,11 +232,12 @@ class WFooter(QHBoxLayout):
         self.addWidget(ledError)
 
         ledOff = WLed(Constant().color_darkgray_hex)
-        self.addWidget(ledOff)
+        self.addWidget(ledOff, alignment=Qt.AlignRight)
 
-        labelRight = QLabel('20:57')
-        labelRight.setFont(Constant().font_fontSize10)
-        labelRight.setStyleSheet("color: white;")
-        labelRight.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        self.addWidget(labelRight)
+        
+        # labelRight = QLabel('20:57')
+        # labelRight.setFont(Constant().font_fontSize10)
+        # labelRight.setStyleSheet("color: white;")
+        # labelRight.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        # self.addWidget(labelRight)
 

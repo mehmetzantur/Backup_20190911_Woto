@@ -14,9 +14,10 @@ class JobController:
 
 
     def createJob(self, jobOrderNumber):
+        id = util().getUIID8()
         conn = DbController().getConnection()
         cmd = conn.cursor()
-        cmd.execute("INSERT INTO Job (JobOrderNumber, Region, IsSended, CreatedTime, Guid) VALUES (?, ?, ?, ?, ?)", (jobOrderNumber, const.region, False, util().getNow(), util().getUIID(),))
+        cmd.execute("INSERT INTO Job (Id, JobOrderNumber, Region, IsSended, CreatedTime, Guid) VALUES (?, ?, ?, ?, ?, ?)", (id, jobOrderNumber, const.region, False, util().getNow(), util().getUIID(),))
         conn.commit()
         conn.close()
-        return cmd.lastrowid
+        return id
