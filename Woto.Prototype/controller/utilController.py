@@ -232,11 +232,13 @@ class WFooter(QHBoxLayout):
         self.addWidget(ledError)
 
         ledOff = WLed(Constant().color_darkgray_hex)
+        ledOff.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         self.addWidget(ledOff)
 
-        labelRight = QLabel('20:57')
-        labelRight.setFont(Constant().font_fontSize10)
-        labelRight.setStyleSheet("color: white;")
-        labelRight.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        self.addWidget(labelRight)
+        
+        # labelRight = QLabel('20:57')
+        # labelRight.setFont(Constant().font_fontSize10)
+        # labelRight.setStyleSheet("color: white;")
+        # labelRight.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        # self.addWidget(labelRight)
 
