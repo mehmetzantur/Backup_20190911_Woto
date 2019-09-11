@@ -81,8 +81,8 @@ class Production(QWidget):
         # self.PulseReadThread.pulseSignal.connect(self.pulseRead)
         # self.PulseReadThread.start()
 
-        # self.PulseWriteThread = PulseWriteThread(id(self.pulseQueue))
-        # self.PulseWriteThread.start()
+        self.PulseWriteThread = PulseWriteThread(id(self.pulseQueue))
+        self.PulseWriteThread.start()
 
         self.IntegrationSendThread = IntegrationSendThread()
 
