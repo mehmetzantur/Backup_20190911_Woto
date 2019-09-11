@@ -10,9 +10,10 @@ from controller.utilController import UtilController as util, Constant as const
 class PulseController:
 
     def createPulse(self, jobId):
+        id = util().getUIID8()
         conn = DbController().getConnection()
         cmd = conn.cursor()
-        cmd.execute("INSERT INTO Pulse (Id, JobId, IsSended, CreatedTime, Guid) VALUES (?, ?, ?, ?, ?)", (util().getUIID8(), jobId, False, util().getNow(), util().getUIID(),))
+        cmd.execute("INSERT INTO Pulse (Id, JobId, IsSended, CreatedTime, Guid) VALUES (?, ?, ?, ?, ?)", (id, jobId, False, util().getNow(), util().getUIID(),))
         conn.commit()
         conn.close()
-        return cmd.lastrowid
+        return id
