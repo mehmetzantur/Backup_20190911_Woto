@@ -84,7 +84,7 @@ class Production(QWidget):
         # self.PulseWriteThread = PulseWriteThread(id(self.pulseQueue))
         # self.PulseWriteThread.start()
 
-        # self.IntegrationSendThread = IntegrationSendThread()
+        self.IntegrationSendThread = IntegrationSendThread()
 
 
         self.focusedCQLineEdit = CQLineEdit()
