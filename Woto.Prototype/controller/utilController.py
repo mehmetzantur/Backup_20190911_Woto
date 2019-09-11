@@ -232,8 +232,7 @@ class WFooter(QHBoxLayout):
         self.addWidget(ledError)
 
         ledOff = WLed(Constant().color_darkgray_hex)
-        ledOff.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        self.addWidget(ledOff)
+        self.addWidget(ledOff, alignment=Qt.AlignRight)
 
         
         # labelRight = QLabel('20:57')
