@@ -77,16 +77,6 @@ class Production(QWidget):
 
     def _buildUI(self, Window):
 
-        self.PulseReadThread = PulseReadThread()
-        self.PulseReadThread.pulseSignal.connect(self.pulseRead)
-        self.PulseReadThread.start()
-
-        # self.PulseWriteThread = PulseWriteThread(id(self.pulseQueue))
-        # self.PulseWriteThread.start()
-
-        self.IntegrationSendThread = IntegrationSendThread()
-
-
         self.focusedCQLineEdit = CQLineEdit()
 
         # region VARIABLES
@@ -100,6 +90,17 @@ class Production(QWidget):
         self.showFullScreen()
 
         self._showDialogStep1()
+
+        self.PulseReadThread = PulseReadThread()
+        self.PulseReadThread.pulseSignal.connect(self.pulseRead)
+        self.PulseReadThread.start()
+
+        # self.PulseWriteThread = PulseWriteThread(id(self.pulseQueue))
+        # self.PulseWriteThread.start()
+
+        self.IntegrationSendThread = IntegrationSendThread()
+
+
 
 
     def _buildMain(self):

@@ -34,7 +34,7 @@ class PulseReadThread(QThread):
         while 1:
             if self.stopFlag == False:
                 # if GPIO.input(11) == 1 and counterx == 1:
-                if pin11:
+                if GPIO.input(11) == 1:
                     # self.pulseSignal.emit(1)
                     # counterx = 0
                     # counter = counter + 1
