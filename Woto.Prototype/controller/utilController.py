@@ -1,4 +1,4 @@
-import datetime, uuid, ctypes, json
+import datetime, uuid, ctypes, json, base64, os
 
 from PyQt5.QtCore import Qt, QSize, QRect
 from PyQt5.QtGui import QFont, QIcon, QPixmap, QRegion
@@ -23,6 +23,9 @@ class UtilController:
 
     def getUIID(self):
         return str(uuid.uuid4())
+
+    def getUIID8(self):
+        return str(base64.b64encode(os.urandom(32)))[:8]
 
 
 class Constant:
