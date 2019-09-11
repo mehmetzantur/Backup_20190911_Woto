@@ -77,12 +77,12 @@ class Production(QWidget):
 
     def _buildUI(self, Window):
 
-        # self.PulseReadThread = PulseReadThread()
-        # self.PulseReadThread.pulseSignal.connect(self.pulseRead)
-        # self.PulseReadThread.start()
+        self.PulseReadThread = PulseReadThread()
+        self.PulseReadThread.pulseSignal.connect(self.pulseRead)
+        self.PulseReadThread.start()
 
-        self.PulseWriteThread = PulseWriteThread(id(self.pulseQueue))
-        self.PulseWriteThread.start()
+        # self.PulseWriteThread = PulseWriteThread(id(self.pulseQueue))
+        # self.PulseWriteThread.start()
 
         self.IntegrationSendThread = IntegrationSendThread()
 
