@@ -49,7 +49,7 @@ class PulseReadThread(QThread):
                 #             counterx = 1
                 #             time.sleep(0.1)
                 #             break
-
+                print('stoppp')
             else:
                 break
 
