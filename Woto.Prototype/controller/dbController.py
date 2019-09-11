@@ -5,7 +5,7 @@ class DbController:
 
     def initDb(self):
 
-        CT_Job = "CREATE TABLE IF NOT EXISTS Job (Id NVARCHAR(8), JobOrderNumber NVARCHAR(MAX), Region NVARCHAR(10), IsSended BOOLEAN, CreatedTime datetime, Guid NVARCHAR(36))"
+        CT_Job = "CREATE TABLE IF NOT EXISTS Job (Id NVARCHAR(8), JobOrderNumber NVARCHAR(30), Region NVARCHAR(10), IsSended BOOLEAN, CreatedTime datetime, Guid NVARCHAR(36))"
         CT_Worker = "CREATE TABLE IF NOT EXISTS Worker (Id NVARCHAR(8), JobId NVARCHAR(8), OperatorId NVARCHAR(4), IsSended BOOLEAN, CreatedTime datetime, Guid NVARCHAR(36))"
         CT_WorkerProcess = "CREATE TABLE IF NOT EXISTS WorkerProcess (Id NVARCHAR(8), WorkerId NVARCHAR(8), OperatorId NVARCHAR(4), ProcessId NVARCHAR(4), IsSended BOOLEAN, CreatedTime datetime, Guid NVARCHAR(36))"
         CT_Pulse = "CREATE TABLE IF NOT EXISTS Pulse (Id NVARCHAR(8), JobId NVARCHAR(8), IsSended BOOLEAN, CreatedTime datetime, Guid NVARCHAR(36))"
