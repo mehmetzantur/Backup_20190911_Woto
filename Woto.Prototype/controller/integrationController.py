@@ -42,7 +42,7 @@ class IntegrationController:
     #region JOB SEND OPERATIONS
 
     def sendWaitingJob(self):
-        print('Waiting')
+        # print('Waiting')
         jobList = self.getWaitingToSendJobList()
         if len(jobList) > 0:
             jsonJobList = util().serializeListToJson(jobList)
