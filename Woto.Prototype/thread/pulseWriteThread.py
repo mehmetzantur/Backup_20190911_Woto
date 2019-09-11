@@ -39,8 +39,7 @@ class PulseWriteThread(QThread):
                 if len(que) > 0:
                     self.pulseSignal.emit(1)
                     pulseObj = que.popleft()
-                    lastrowid = self.pulseController.createPulse(pulseObj.jobId)
-                    print(lastrowid)
+                    id = self.pulseController.createPulse(pulseObj.jobId)
                     queList = list(UtilController().getObjectFromMemory(self.valAddress))
                     print(queList)
                     self.sleep(1)

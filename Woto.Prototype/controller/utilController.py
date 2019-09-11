@@ -26,7 +26,6 @@ class UtilController:
 
     def getUIID8(self):
         return shortuuid.ShortUUID().random(length=8)
-        # return str(base64.b64encode(os.urandom(32)))[:8]
 
 
 class Constant:

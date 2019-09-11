@@ -48,7 +48,7 @@ class IntegrationController:
             jsonJobList = util().serializeListToJson(jobList)
             result = requests.post(self.serviceUrl + "AddJob", data=jsonJobList, headers=self.headers)
             if result.status_code == 200:
-                print('Job 200')
+                print('Web Servis: Job 200')
 
                 updateStatus = []
                 for item in result.json():
@@ -101,9 +101,9 @@ class IntegrationController:
         if len(workerList) > 0:
             jsonWorkerList = util().serializeListToJson(workerList)
             result = requests.post(self.serviceUrl + "AddWorker", data = jsonWorkerList, headers = self.headers)
-            print(jsonWorkerList)
+            # print(jsonWorkerList)
             if result.status_code == 200:
-                print('Worker 200')
+                print('Web Servis: Worker 200')
 
                 updateStatus = []
                 for item in result.json():
@@ -155,10 +155,10 @@ class IntegrationController:
 
         if len(workerProcessList) > 0:
             jsonWorkerProcessList = util().serializeListToJson(workerProcessList)
-            print(jsonWorkerProcessList)
+            # print(jsonWorkerProcessList)
             result = requests.post(self.serviceUrl + "AddWorkerProcess", data = jsonWorkerProcessList, headers = self.headers)
             if result.status_code == 200:
-                print('WorkerProcess 200')
+                print('Web Servis: WorkerProcess 200')
 
                 updateStatus = []
                 for item in result.json():
@@ -210,7 +210,7 @@ class IntegrationController:
             jsonPulseList = util().serializeListToJson(pulseList)
             result = requests.post(self.serviceUrl + "AddPulse", data=jsonPulseList, headers=self.headers)
             if result.status_code == 200:
-                print('Pulse 200')
+                print('Web Servis: Pulse 200')
 
                 updateStatus = []
                 for item in result.json():
